@@ -2128,7 +2128,7 @@ function spk(){return `<svg width="64" height="64" viewBox="0 0 64 64"><circle c
 function setSnd(){const b=$('#pm');if(b)b.innerHTML=spk()}
 const toggleMusic=()=>{save.music=false;persist();musicSync();const pm=$('#pmu');if(pm)pm.innerHTML=noteIc()};
 const adsIc=()=>`<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#9b5de5" stroke="#4a2a14" stroke-width="4"/><text x="32" y="41" text-anchor="middle" font-family="Lilita One,Arial" font-size="24" fill="#fff">AD</text><path d="M14 14L50 50" stroke="#4a2a14" stroke-width="9" stroke-linecap="round"/><path d="M14 14L50 50" stroke="#ff4d3a" stroke-width="5" stroke-linecap="round"/></svg>`;
-const SHARE_URL='https://play.google.com/store/apps/details?id=com.mastershake.game';
+const SHARE_URL=(window.Capacitor&&window.Capacitor.getPlatform&&window.Capacitor.getPlatform()==='ios')?'https://apps.apple.com/app/id6828295199':'https://play.google.com/store/apps/details?id=com.mastershake.game';
 function shareGame(back){const url=NATIVE?SHARE_URL:(location.href.split('#')[0]),text='Come play QSMaster Shake with me! Blend smoothies on the most beautiful beaches in the world 🍓🥭🏝️';
   const reward=()=>{if(save.shared){back&&back();return}save.shared=1;const b0=save.bank;save.bank+=1000;persist();sfx2.perfect();
     gotIt({img:'share_kids',cls:'sharegot',title:'THANK YOU!',name:'+1,000 coins',sub:'Thanks for sharing QSMaster Shake with a friend!'},()=>{back&&back()})};
@@ -3317,7 +3317,7 @@ const ADCFG={ // REPLACE the ad unit ids with your own from admob.google.com (th
 const NATIVE=!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
 // installed web app (Add to Home Screen): offline cache. Only on a real website, never inside the phone app or a preview.
 try{if('serviceWorker' in navigator&&location.protocol==='https:'&&!NATIVE&&!/claude|anthropic|usercontent/i.test(location.hostname))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}catch(e){}
-const ADMOB=NATIVE&&window.Capacitor.Plugins&&window.Capacitor.Plugins.AdMob;
+const ADMOB=NATIVE?((window.Capacitor.Plugins&&window.Capacitor.Plugins.AdMob)||(window.Capacitor.registerPlugin&&window.Capacitor.registerPlugin('AdMob'))||null):null;
 const ADS_LIVE=!!ADMOB; // full-screen ads between levels only in the app
 const IAP_LIVE=!NATIVE; // paid items stay hidden in the app until Google Play Billing is connected
 let adReady=false;
@@ -3330,6 +3330,7 @@ function showRewarded(done){ // "watch a video to get a reward"
     hs.push(ADMOB.addListener('onRewardedVideoAdDismissed',()=>{off();adPause(false);if(got){sfx.coin();done&&done()}else toast('Watch the whole video to get the prize!')}));
     hs.push(ADMOB.addListener('onRewardedVideoAdFailedToLoad',()=>{off();adPause(false);toast('No video right now. Try again soon!')}));
     ADMOB.prepareRewardVideoAd({adId:ADCFG.rewarded,isTesting:ADCFG.testing,npa:true}).then(()=>ADMOB.showRewardVideoAd()).catch(()=>{off();adPause(false);toast('No video right now. Try again soon!')});return}
+  if(NATIVE){toast(ADMOB?'Getting a video ready… try again in a moment!':'No video right now. Try again soon!');if(ADMOB&&!adReady){try{ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'}).then(()=>{adReady=true}).catch(()=>{})}catch(e){}}return} // in the app: never a fake video
   const o=$('#adlayer');let n=3;o.hidden=false;o.innerHTML=`<div class="adbox"><div class="adt">Video ad</div><div class="adn" id="adn">${n}</div><small>In the app a short video plays here</small></div>`;
   const t=setInterval(()=>{n--;const e=$('#adn');if(e)e.textContent=n;if(n<=0){clearInterval(t);o.hidden=true;o.innerHTML='';sfx.coin();done&&done()}},1000)}
 // before a new game: a few seconds to take a free power-up for a video, then the offer goes away by itself
