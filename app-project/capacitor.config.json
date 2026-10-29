@@ -1,0 +1,11 @@
+{
+  "appId": "com.mastershake.game",
+  "appName": "QSMaster Shake",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#ffd23f"
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

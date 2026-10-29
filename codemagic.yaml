@@ -1,0 +1,55 @@
+# Codemagic builds the iPhone/iPad app in the cloud (no Mac needed) and sends it to App Store Connect (TestFlight).
+# Needs, once, in Codemagic: Team settings > Integrations > Developer Portal (App Store Connect API key) named "QSMaster ASC key".
+workflows:
+  ios-release:
+    name: QSMaster Shake iOS release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: QSMaster ASC key
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.mastershake.game
+      vars:
+        APP_STORE_APPLE_ID: "0"   # optional; not needed for upload
+      node: 22
+      xcode: latest
+    scripts:
+      - name: Install packages
+        script: |
+          cd app-project
+          npm install
+      - name: Create the iOS project from the game
+        script: |
+          cd app-project
+          npm run copy-web
+          npx cap add ios
+          node patch-ios.js
+          npx @capacitor/assets generate --ios --iconBackgroundColor '#ffd23f' --splashBackgroundColor '#ffd23f'
+          npx cap sync ios
+          node patch-ios.js
+      - name: Signing
+        script: |
+          cd app-project
+          xcode-project use-profiles
+      - name: Build number (always higher than the last one in App Store Connect)
+        script: |
+          cd app-project/ios/App
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$(app-store-connect apps list --bundle-id-identifier com.mastershake.game --strict-match-identifier --json | python3 -c 'import sys,json;print(json.load(sys.stdin)[0]["id"])')" 2>/dev/null || echo 0)
+          agvtool new-version -all $(( ${LATEST:-0} + 1 ))
+          agvtool new-marketing-version 1.0
+      - name: Build the app (.ipa)
+        script: |
+          cd app-project/ios/App
+          if [ -d App.xcworkspace ]; then
+            xcode-project build-ipa --workspace App.xcworkspace --scheme App
+          else
+            xcode-project build-ipa --project App.xcodeproj --scheme App
+          fi
+    artifacts:
+      - app-project/ios/App/build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: false

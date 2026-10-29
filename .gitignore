@@ -1,0 +1,7 @@
+node_modules/
+app-project/node_modules/
+app-project/www/
+app-project/ios/
+app-project/android/
+game/t.html
+game/tf/

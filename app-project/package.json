@@ -1,0 +1,24 @@
+{
+  "name": "master-shake",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "copy-web": "node -e \"require('fs').rmSync('www',{recursive:true,force:true});require('fs').cpSync('../game','www',{recursive:true})\"",
+    "setup": "npm run copy-web && npx cap add android && node patch-android.js && npx cap sync android",
+    "sync": "npm run copy-web && npx cap sync android && node patch-android.js",
+    "open": "npx cap open android",
+    "setup-ios": "npm run copy-web && npx cap add ios && node patch-ios.js && npx cap sync ios",
+    "sync-ios": "npm run copy-web && npx cap sync ios && node patch-ios.js",
+    "open-ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/ios": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor-community/admob": "^8.2.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/assets": "^3.0.5"
+  }
+}

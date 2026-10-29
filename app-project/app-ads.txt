@@ -1,0 +1,4 @@
+# Upload this file to the ROOT of the website you write in Google Play / App Store as the developer website:
+#   https://YOUR-SITE/app-ads.txt
+# Publisher id is filled in (pub-1207843103281016). A copy without comments is already at game/app-ads.txt, so it goes to the site root with the game.
+google.com, pub-1207843103281016, DIRECT, f08c47fec0942fa0
