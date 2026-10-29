@@ -9,7 +9,7 @@ if(!g.includes('signingConfigs {')){
                 storeFile file(System.getenv("CM_KEYSTORE_PATH"))
                 storePassword System.getenv("CM_KEYSTORE_PASSWORD")
                 keyAlias System.getenv("CM_KEY_ALIAS")
-                keyPassword System.getenv("CM_KEY_PASSWORD")
+                keyPassword System.getenv("CM_KEYSTORE_PASSWORD") // PKCS12: key password = store password
             }
         }
     }`);
