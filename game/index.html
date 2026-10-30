@@ -3356,14 +3356,17 @@ const IAP_LIVE=!NATIVE; // paid items stay hidden in the app until Google Play B
 let adReady=false;
 if(ADMOB){ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'}).then(()=>{adReady=true}).catch(()=>{})}
 function adPause(on){if(on){window.__adMuted=true;try{ac&&ac.suspend()}catch(e){}}else{window.__adMuted=false;try{ac&&ac.resume()}catch(e){}}}
+// if a video can't load, the button that asked for it becomes tappable again (so the player can try later)
+let adBtn=null;document.addEventListener('pointerdown',e=>{const b=e.target&&e.target.closest&&e.target.closest('button');if(b)adBtn=b},true);
+const adRetry=()=>{const b=adBtn;if(b&&b.disabled&&document.contains(b))b.disabled=false};
 function showRewarded(done){ // "watch a video to get a reward"
   if(save.noAds){done&&done();return}
   if(ADMOB&&adReady){let got=false;const hs=[];const off=()=>hs.forEach(h=>h.then?h.then(x=>x.remove()):h.remove&&h.remove());adPause(true);
     hs.push(ADMOB.addListener('onRewardedVideoAdReward',()=>{got=true}));
-    hs.push(ADMOB.addListener('onRewardedVideoAdDismissed',()=>{off();adPause(false);if(got){sfx.coin();done&&done()}else toast('Watch the whole video to get the prize!')}));
-    hs.push(ADMOB.addListener('onRewardedVideoAdFailedToLoad',()=>{off();adPause(false);toast('No video right now. Try again soon!')}));
-    ADMOB.prepareRewardVideoAd({adId:ADCFG.rewarded,isTesting:ADCFG.testing,npa:true}).then(()=>ADMOB.showRewardVideoAd()).catch(()=>{off();adPause(false);toast('No video right now. Try again soon!')});return}
-  if(NATIVE){toast(ADMOB?'Getting a video ready… try again in a moment!':'No video right now. Try again soon!');if(ADMOB&&!adReady){try{ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'}).then(()=>{adReady=true}).catch(()=>{})}catch(e){}}return} // in the app: never a fake video
+    hs.push(ADMOB.addListener('onRewardedVideoAdDismissed',()=>{off();adPause(false);if(got){sfx.coin();done&&done()}else{adRetry();toast('Watch the whole video to get the prize!')}}));
+    hs.push(ADMOB.addListener('onRewardedVideoAdFailedToLoad',()=>{off();adPause(false);adRetry();toast('No video right now. Try again soon!')}));
+    ADMOB.prepareRewardVideoAd({adId:ADCFG.rewarded,isTesting:ADCFG.testing,npa:true}).then(()=>ADMOB.showRewardVideoAd()).catch(()=>{off();adPause(false);adRetry();toast('No video right now. Try again soon!')});return}
+  if(NATIVE){adRetry();toast(ADMOB?'Getting a video ready… try again in a moment!':'No video right now. Try again soon!');if(ADMOB&&!adReady){try{ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'}).then(()=>{adReady=true}).catch(()=>{})}catch(e){}}return} // in the app: never a fake video
   const o=$('#adlayer');let n=3;o.hidden=false;o.innerHTML=`<div class="adbox"><div class="adt">Video ad</div><div class="adn" id="adn">${n}</div><small>In the app a short video plays here</small></div>`;
   const t=setInterval(()=>{n--;const e=$('#adn');if(e)e.textContent=n;if(n<=0){clearInterval(t);o.hidden=true;o.innerHTML='';sfx.coin();done&&done()}},1000)}
 // before a new game: a few seconds to take a free power-up for a video, then the offer goes away by itself
