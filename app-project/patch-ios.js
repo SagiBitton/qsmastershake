@@ -18,17 +18,24 @@ put('ITSAppUsesNonExemptEncryption','<false/>');
 fs.writeFileSync(path,p);console.log('Info.plist patched for Master Shake');
 
 // Game-style home bar: the first swipe only shows the bar, a second (strong) swipe leaves the game, so children don't exit by accident.
-// A small view controller (inside AppDelegate.swift, already part of the app) replaces Capacitor's default one in Main.storyboard.
+// Capacitor's view controller can't be subclassed for these properties, so we swap in the two answers at launch (ObjC runtime).
 {const ad='ios/App/App/AppDelegate.swift';let a=fs.readFileSync(ad,'utf8');
- if(!a.includes('class GameViewController')){a+=`
+ if(!a.includes('enum GameChrome')){
+  a+=`
 
-// QSMaster Shake: double swipe to leave the game, home bar fades out while playing
-class GameViewController: CAPBridgeViewController {
-    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge { return .all }
-    override var prefersHomeIndicatorAutoHidden: Bool { return true }
-    override var prefersStatusBarHidden: Bool { return true }
+// QSMaster Shake: double swipe to leave the game, and the home bar fades out while playing
+import ObjectiveC
+enum GameChrome {
+    static func install() {
+        let cls: AnyClass = CAPBridgeViewController.self
+        let edges: @convention(block) (AnyObject) -> UInt = { _ in UIRectEdge.all.rawValue }
+        class_replaceMethod(cls, #selector(getter: UIViewController.preferredScreenEdgesDeferringSystemGestures), imp_implementationWithBlock(edges), "Q@:")
+        let hide: @convention(block) (AnyObject) -> Bool = { _ in true }
+        class_replaceMethod(cls, #selector(getter: UIViewController.prefersHomeIndicatorAutoHidden), imp_implementationWithBlock(hide), "B@:")
+    }
 }
-`;if(!/import Capacitor/.test(a))a='import Capacitor\n'+a;fs.writeFileSync(ad,a)}
- const sb='ios/App/App/Base.lproj/Main.storyboard';let b=fs.readFileSync(sb,'utf8');
- b=b.replace(/customClass="CAPBridgeViewController"\s+customModule="Capacitor"/,'customClass="GameViewController" customModule="App" customModuleProvider="target"');
- fs.writeFileSync(sb,b);console.log('GameViewController set:',b.includes('GameViewController'))}
+`;
+  if(!/import Capacitor/.test(a))a='import Capacitor\n'+a;
+  a=a.replace(/(didFinishLaunchingWithOptions[^{]*\{)/,'$1\n        GameChrome.install()');
+  fs.writeFileSync(ad,a)}
+ console.log('GameChrome installed:',a.includes('GameChrome.install()'))}
