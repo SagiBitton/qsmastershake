@@ -1967,7 +1967,7 @@ const levelOpen=(b,l)=>hasArt(b)&&reachable(b)&&(UNLOCK_ALL||l===0||stars(BEACHE
 
 /* ================= AUDIO ================= */
 let ac=null;
-function audio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==='suspended')ac.resume();return ac}
+function audio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==='suspended'&&!(typeof bgQuiet!=='undefined'&&bgQuiet))ac.resume();return ac}
 let SFXG=null;const svol=()=>save.svol==null?1:save.svol,mvol=()=>save.mvol==null?.8:save.mvol,wvol=()=>save.wvol==null?.8:save.wvol;
 function sfxOut(c){if(!SFXG){SFXG=c.createGain();SFXG.connect(c.destination)}SFXG.gain.value=svol();return SFXG}
 function tone(f,d=.12,type='sine',v=.18,slide=0,delay=0){
@@ -3421,6 +3421,14 @@ function restorePurchases(){ // in the app this asks Google Play / the App Store
   setTimeout(()=>{done=total},9000); // never get stuck on a slow connection
   requestAnimationFrame(tick)})();
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&G&&!G.over&&!G.paused)$('#pauseBtn').click()});
+// all sound stops when the app goes to the background (home button, app switch, screen off) and comes back when it returns
+var bgQuiet=false;
+const quiet=on=>{bgQuiet=on;try{if(!ac)return;if(on){if(ac.state==='running')ac.suspend()}else if(ac.state==='suspended')ac.resume()}catch(e){}};
+document.addEventListener('visibilitychange',()=>quiet(document.hidden));
+document.addEventListener('pause',()=>{quiet(true);if(G&&!G.over&&!G.paused)$('#pauseBtn').click()}); // Capacitor: app went to the background
+document.addEventListener('resume',()=>quiet(false)); // Capacitor: app is back
+addEventListener('pagehide',()=>quiet(true));addEventListener('pageshow',()=>quiet(false));
+try{const AppP=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App;if(AppP&&AppP.addListener)AppP.addListener('appStateChange',s=>quiet(!s.isActive))}catch(e){}
 })();
 </script>
 
