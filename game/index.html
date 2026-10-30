@@ -39,7 +39,7 @@ html.phone #title #dailyBtn,html.phone #title .wallet{translate:calc(var(--sxr) 
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none;background:var(--sea-deep);font-family:var(--body);color:var(--ink);-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 #app{touch-action:none;overscroll-behavior:none;position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,var(--sea),var(--sea-deep));padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
 #app::before{content:"";position:absolute;inset:-40px;background:var(--fill,none) center/cover;filter:blur(18px) brightness(.85) saturate(1.1);transition:background-image .3s}
-#stage{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center center;overflow:visible;--oxl:0px;--oxr:0px;--oyt:0px;--oyb:0px;--sxl:0px;--sxr:0px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#7fd3f0}
+#stage{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center center;overflow:visible;--oxl:0px;--oxr:0px;--oyt:0px;--oyb:0px;--sxl:0px;--sxr:0px;--kxl:0px;--kxr:0px;--mxl:0px;--mxr:0px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#7fd3f0}
 .screen{position:absolute;inset:0;overflow:visible}
 .screen::before{content:"";position:absolute;top:calc(-1*var(--oyt));bottom:calc(-1*var(--oyb));left:calc(-1*var(--oxl));right:calc(-1*var(--oxr));background:inherit;z-index:-1;pointer-events:none}
 #app::before{display:none!important}
@@ -742,6 +742,9 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 @keyframes dropFly{0%{transform:translate(0,0) scale(.3);opacity:0}20%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(var(--r));opacity:0}}
 #loader .lbar{position:relative;z-index:3;width:min(70vw,420px);height:3.2vmin;min-height:18px;background:var(--cream);border:5px solid var(--ink);border-radius:99px;overflow:hidden}
 #loader .lbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4cc23f,#ffd23f,#ff9a1f);transition:width .3s}
+/* the loading bar stays neatly inside its rounded bubble (iPhone Safari does not clip a growing bar with overflow+radius alone) */
+#loader .lbar{box-sizing:border-box;padding:3px;clip-path:inset(0 round 99px);-webkit-mask-image:-webkit-radial-gradient(white,black);isolation:isolate}
+#loader .lbar i{border-radius:99px;min-width:calc(3.2vmin - 6px);max-width:100%;box-shadow:inset 0 2px 0 rgba(255,255,255,.45)}
 #loader .ltxt{position:relative;z-index:3;font-size:min(7vw,5vh);color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill}
 #title .btnrow .btn{justify-content:center;text-align:center;gap:0}#title .btnrow .btn span{flex:none;margin:0 auto}#evpill{order:0;color:#fff;font-size:24px;padding:4px 16px;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;gap:6px;animation:evPulse 1.2s ease-in-out infinite}
 @keyframes evPulse{50%{transform:scale(1.08)}}
@@ -1593,6 +1596,59 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 #title .tbtn span,#title .tlab{font-size:27px!important}
 #title .btnrow{top:446px!important;gap:16px!important}
 #title .btnrow .btn{width:420px!important;height:104px!important;font-size:50px!important}
+/* round 22: owner's marked screenshots (iPhone) */
+/* home: corner buttons right into the corners, daily + share at mid-height just clear of the camera */
+#title .gearbtn,#title .tb1,html.phone #title .gearbtn,html.phone #title .tb1{translate:calc(-1*var(--kxl)) calc(-1*var(--oyt))!important}
+#title #boostBtn,#title #shopBtn,html.phone #title #boostBtn,html.phone #title #shopBtn{translate:var(--kxr) calc(-1*var(--oyt))!important}
+#title .wallet,html.phone #title .wallet{translate:var(--kxr) var(--oyb)!important}
+#title #dailyBtn,html.phone #title #dailyBtn,#title #shareBtn,html.phone #title #shareBtn{translate:var(--mxr) var(--oyb)!important}
+#title .tbtn#shareBtn:not(#dailyBtn){position:absolute;right:34px!important;top:auto!important;bottom:384px!important;width:124px!important;z-index:3}
+#shareBtn .shpic{position:relative;display:block;width:104px;height:96px;margin:0 auto}
+#shareBtn .shpic img:first-child{width:104px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(74,42,20,.35))}
+#shareBtn .shcoin{position:absolute;right:-4px;bottom:-6px;width:44px;height:44px;filter:drop-shadow(0 3px 0 rgba(74,42,20,.4));animation:giftHop 1.6s ease-in-out infinite}
+#title #shareBtn span:last-child{display:block;margin-top:8px;font-size:25px}
+/* map: buttons and wallet as big as on the home screen, in the corners; bigger title */
+#map .head{left:calc(-1*var(--kxl))!important;right:calc(-1*var(--kxr))!important;padding:0 10px!important}
+#map .mapbig,#map .mapbig img{width:122px!important;height:122px!important}
+#map .mapbtns{left:144px!important;gap:20px!important}
+#map .mapbtns .cbtn{width:122px!important;height:122px!important}#map .trophy,#map .trophy img{width:122px!important;height:122px!important}#map .mshop img{width:84px!important;height:84px!important}
+#map .mapbtns small{font-size:25px!important}
+#map .head h2{font-size:64px!important;left:47%!important}
+#map .mwallet{font-size:42px!important;padding:8px 22px 8px 10px!important;gap:10px!important;translate:none!important}
+#map .mwallet img{width:62px!important;height:62px!important}#map .mwallet i{height:46px!important}
+/* game: pause / stars / hearts into the left corner, timer / coins / cups into the right corner */
+#game #hud{left:calc(8px - var(--kxl))!important;right:calc(8px - var(--kxr))!important}
+#game #boosts{left:calc(-2px + var(--kxl) - var(--mxl))!important}
+#beachsign{translate:calc(var(--kxr)*.85) calc(-1*var(--oyt))!important}
+#game #blender{left:calc(1150px + var(--mxr))!important}
+/* counter: fruits from the left corner, the picked row + BLEND reach the right corner and are bigger */
+#game #tray,#game #panel{top:486px!important;height:calc(228px*var(--gy,1))!important;translate:0 calc(var(--oyb) - 228px*(var(--gy,1) - 1))!important}
+#game #tray{left:calc(8px - var(--kxl))!important;width:calc(822px + var(--kxl) + var(--kxr)*.6)!important}
+#game #panel{left:calc(840px + var(--kxr)*.6)!important;width:calc(432px + var(--kxr)*.4)!important;padding:12px!important}
+#game #panel.row #jar .s{height:92px!important}#game #panel.row #jar .s img{height:78px}
+#game #panel.row #blendBtn{height:94px!important;font-size:54px!important}
+#game #panel.row #trash{width:86px;height:86px}#game #panel.row #trash svg{width:54px;height:54px}
+/* pause window: smaller sound / waves rows, bigger buttons spread evenly */
+.setcard .vols{transform:scale(.88);transform-origin:50% 0;margin-bottom:-14px}
+.setcard .btns.setbot:has(#sag){display:grid!important;grid-template-columns:repeat(3,1fr);gap:16px!important;width:100%}
+.setcard .btns.setbot:has(#sag) .btn{width:100%!important;height:84px!important;font-size:36px!important;padding:0 8px 6px!important}
+/* game over: what you won in THIS game, each in its own bubble */
+.qstats{display:flex!important;justify-content:center;gap:18px!important}
+.qstats .qsp{display:flex;align-items:center;gap:10px;background:var(--cream);border:4px solid var(--ink);border-radius:999px;padding:6px 24px 6px 8px;box-shadow:0 5px 0 rgba(74,42,20,.35);font-family:var(--display);font-size:38px;color:var(--ink)}
+.qstats .qsp img{width:54px;height:54px;object-fit:contain}
+/* resume count: GO! */
+.cd.rcd.go span{color:#7be04a}
+/* collection: a shake's name, ingredients and place always stay inside the white bubble */
+.hzin{box-sizing:border-box;max-width:94%!important;overflow:hidden}
+.hzin .zimg{flex:none}
+.hzin .ztx{flex:1 1 auto;min-width:0;max-width:none!important;padding-right:10px;box-sizing:border-box}
+.hzin .ztx b{font-size:46px!important;overflow-wrap:anywhere}
+.hzin .ztx p{display:flex;flex-wrap:wrap;gap:6px;max-width:100%}
+.hzin .ztx p img{max-width:64px;height:auto}
+.hzin .ztx small{overflow-wrap:anywhere}
+/* how-to > MEGA fruits: same grid as the collection */
+.megacard .gcards.anigrid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-auto-rows:auto;flex-wrap:nowrap!important;gap:16px;max-height:430px;overflow-y:auto;padding:10px 6px 14px;width:100%;box-sizing:border-box;touch-action:pan-y}
+.megacard{width:1080px!important;max-width:94%}
 </style>
 
   <div id="loader">
@@ -1630,6 +1686,7 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
     <button class="round gearbtn" id="setBtn1" aria-label="Settings"><img src="a/u_gear.webp" alt=""><span class="tlab">SETTINGS</span></button>
     <button class="tbtn" id="shopBtn" aria-label="Shop"><i class="cbtn teal"><img src="a/chest_open.webp" alt=""></i><span>SHOP</span></button>
     <button class="tbtn" id="boostBtn" aria-label="Boosts"><i class="cbtn amber"><svg viewBox="0 0 24 24" width="58" height="58"><path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2z" fill="#fff8d0" stroke="#4a2a14" stroke-width="2" stroke-linejoin="round"/><path d="M13 4.5 7.4 12.3" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".9"/></svg></i><span>BOOSTS</span></button>
+    <button class="tbtn dailyfloat sharefloat" id="shareBtn" aria-label="Share with a friend"><span class="shpic"><img src="a/share_cups.webp" alt=""><img class="shcoin" src="a/u_coin.webp" alt=""></span><span>SHARE</span></button>
     <button class="tbtn dailyfloat" id="dailyBtn" aria-label="Daily prize"><img src="a/gift.webp" alt=""><span>DAILY</span></button>
   </section>
 
@@ -1921,7 +1978,7 @@ BEACHES.forEach((b,i)=>b.levels.forEach((l,li)=>{const k=i*3+li;
   l.time=40;l.every=Math.max(2.8,4.6-k*.015);l.pat=Math.max(13,26-k*.08);
   const arrive=l.time/(l.every*PACE)+1,pay=l.menu.reduce((a,r)=>a+(R[r].ing.length*10+5)*1.35,0)/l.menu.length,r10=x=>Math.max(10,Math.round(x/10)*10);
   l.goals=[.55,.8,1].map(f=>r10(Math.round(arrive*f)*pay*1.3))}));
-const PEOPLE=['zebra','rhino','leo','bshark','koala2','chameleon','boar','meerkat','tiger','octopus','snake','orca','panda','monkey','penguin','turtle','kangaroo','parrot','capybara','hammer','sharkboy','monk2','sheikh','beard','pirate','mermaid','astro','courier','snorkel','surfer','dj','volley','braids','shirt','capkid','glasses','afro','bandana','aunt','pigtails','curly','pony','spiky','sunnies','gpa3','camera','bhat','granny'];
+const PEOPLE=['zebra','rhino','leo','bshark','koala2','chameleon','boar','meerkat','tiger','octopus','snake','orca','monkey','penguin','turtle','kangaroo','parrot','capybara','hammer','sharkboy','monk2','sheikh','beard','pirate','mermaid','astro','courier','snorkel','surfer','dj','volley','braids','shirt','capkid','glasses','afro','bandana','aunt','pigtails','curly','pony','spiky','sunnies','gpa3','camera','bhat','granny'];
 const CSTRIP={"zebra":[169, 141, 192],"rhino":[218, 204, 225],"leo":[192, 186, 272],"bshark":[253, 226, 269],"koala2":[254, 251, 255],"chameleon":[200, 190, 268],"boar":[210, 170, 249],"meerkat":[186, 185, 270],"tiger":[200, 180, 283],"octopus":[232, 221, 254],"snake":[175, 171, 179],"orca":[228, 214, 250],"panda":[184, 180, 252],"f_melon":[260, 215, 293],"f_strawberry":[206, 207, 255],"f_coconut":[248, 223, 306],"f_dragon":[187, 188, 238],"f_pineapple":[191, 149, 215],"f_mango":[203, 189, 244],"f_watermelon":[223, 181, 246],"f_peach":[246, 211, 280],"f_cherry":[176, 154, 204],"f_papaya":[253, 193, 257],"f_blueberry":[256, 215, 286],"f_apple":[243, 207, 308],"f_pear":[205, 162, 235],"f_grape":[189, 187, 273],"f_lime":[194, 193, 271],"f_grapefruit":[252, 217, 301],"sharkboy":[152, 150, 187],"kangaroo":[180, 180, 216],"parrot":[202, 198, 264],"crab":[261, 231, 317],"capybara":[189, 173, 216],"hammer":[256, 254, 274],"sunburn":[161, 134, 151],"monk2":[156, 160, 166],"sheikh":[154, 146, 186],"beard":[144, 167, 159],"penguin":[280, 209, 247],"snorkel":[177, 171, 210],"genie":[196, 195, 201],"turtle":[323, 385, 313],"lion":[223, 164, 250],"koala":[240, 234, 253],"courier":[164, 174, 202],"surfer":[198, 179, 185],"dj":[174, 167, 203],"volley":[201, 189, 216],"pirate":[202, 190, 221],"mermaid":[225, 225, 227],"astro":[239, 182, 253],"braids":[162,160,180],"teen":[192,162,192],"shirt":[193,193,203],"mom":[155,174,160],"grandpa":[199,195,199],"capkid":[197,209,257],"glasses":[150,151,150],"afro":[199,215,249],"bandana":[195,226,251],"aunt":[197,247,197],"gpa2":[231,235,231],"pigtails":[208,219,208],"curly":[159,158,160],"pony":[179,210,209],"spiky":[184,171,198],"sunnies":[202,242,203],"gpa3":[230,235,230],"nkid":[124,115,251],"couple":[292,291,311],"camera":[183,175,216],"monk":[134,121,133],"saudi":[122,107,155],"rider":[188,150,158],"brit":[156,143,161],"russ":[202,151,198],"thai":[166,147,205],"travel":[147,147,177],"bhat":[132,130,175],"hiker":[164,141,170],"granny":[165,171,187],"guard":[152,146,135],"diver":[127,128,176],"gold":[196,196,167],"vip":[207,214,184],"monkey":[199,181,193]};
 // each customer's 3 faces ship as one picture strip; cut them apart once at start-up
 // cut a piece out of a picture strip. toBlob works off the main thread (much lighter than toDataURL on phones).
@@ -2118,6 +2175,10 @@ function fit(){const st=$('#stage'),vv=window.visualViewport,W=Math.round(vv?vv.
   // controls (buttons, counters) may reach out past the game box too, but never into the notch / camera / rounded corners
   const ins=ROT===90?[sa.t,sa.b,sa.r,sa.l]:ROT===-90?[sa.b,sa.t,sa.l,sa.r]:[sa.l,sa.r,sa.t,sa.b],edge=PHONE?10:0;
   ['--sxl','--sxr'].forEach((v,i)=>st.style.setProperty(v,(Math.max(0,m[i]-ins[i]-edge)/K).toFixed(1)+'px'));
+  // corner controls (top and bottom rows) may go close to the screen edge: the camera sits in the middle of the side
+  ['--kxl','--kxr'].forEach((v,i)=>st.style.setProperty(v,(Math.max(0,m[i]-(PHONE?14:0))/K).toFixed(1)+'px'));
+  // controls at mid-height (blender, boosts, daily) stay just clear of the camera cut-out
+  ['--mxl','--mxr'].forEach((v,i)=>st.style.setProperty(v,(Math.max(0,m[i]-(PHONE?Math.min(ins[i],38)+10:0))/K).toFixed(1)+'px'));
   // taller-than-16:9 screens: grow the controls into the spare room (up to +45% tray height, +20% buttons)
   const gy=Math.min(1.45,1+Math.max(0,m[3])/K/260);st.style.setProperty('--gy',gy.toFixed(3));st.style.setProperty('--gz',Math.min(gy,1.2).toFixed(3));
   st.style.setProperty('--mz',Math.min(1.35,(720+Math.max(0,m[2])/K+Math.max(0,m[3])/K)/720).toFixed(3))}
@@ -2167,7 +2228,7 @@ function shareGame(back){const url=NATIVE?SHARE_URL:(location.href.split('#')[0]
   const fallback=()=>{try{navigator.clipboard.writeText(text+' '+url).then(()=>{toast('Link copied! Send it to a friend');reward()},()=>{toast('Share this link: '+url);reward()})}catch(e){toast('Share this link: '+url);reward()}};
   if(navigator.share)navigator.share({title:'QSMaster Shake',text,url}).then(reward,err=>{if(err&&err.name==='AbortError'){back&&back()}else fallback()});else fallback()}
 function resumeCount(){if(!G||G.over)return;G.paused=true;const el=document.createElement('div');el.className='cd rcd';$('#game').appendChild(el);let n=3;
-  const tick=()=>{if(!G||G.over){el.remove();return}if(n===0){el.remove();G.paused=false;G.last=performance.now();return}
+  const tick=()=>{if(!G||G.over){el.remove();return}if(n===0){el.innerHTML='<span>GO!</span>';el.classList.add('go');el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');try{goSfx()}catch(e){}n=-1;setTimeout(tick,550);return}if(n<0){el.remove();G.paused=false;G.last=performance.now();return}
     el.innerHTML='<span>'+n+'</span>';el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop');try{beep(3-n)}catch(e){}n--;setTimeout(tick,650)};tick()}
 function settings(inGame){ // gear: pause/settings with volume for music, sound and waves
   if(inGame){if(!G||G.over)return;G.paused=true}
@@ -2176,10 +2237,9 @@ function settings(inGame){ // gear: pause/settings with volume for music, sound 
   overlay(`${inGame?'':'<button class="xclose" id="sx" aria-label="Close">×</button>'}<button class="helpq" id="howBtn" aria-label="How to play">?</button>
     <h2>${inGame?T('paused'):T('settings')}</h2>
     <div class="vols">${row('sn',spk(),T('sound'),svol(),!save.mute)}${row('sea',waveIc(),T('waves'),wvol(),save.sea!==false)}</div>
-    ${inGame?'':`<button class="sharecard" id="shareB"><span class="shic"><img src="${A('share_cups')}" alt=""></span><span class="shtx"><b>INVITE A FRIEND</b><small>${save.shared?'Thanks for sharing! Share again anytime':'Share the game and get'}</small></span>${save.shared?'':`<span class="shrw"><img src="${A('u_coin')}" alt="">1,000</span>`}</button>`}
     ${save.noAds||!IAP_LIVE?'':`<div class="adsrow"><button class="noadsb" id="pads" aria-label="No ads">${adsIc()}<span>${T('noads')}</span></button></div>`}
     <div class="btns setbot">${inGame?'':'<button class="privlink" id="privB">Privacy</button><button class="privlink" id="termsB">Terms</button>'}
-      ${inGame?'<button class="btn orange" id="sh">'+T('home')+'</button><button class="btn" id="sx">'+T('ret')+'</button><button class="btn blue" id="sag">NEW GAME</button>':''}</div>`);
+      ${inGame?'<button class="btn blue" id="sag">NEW GAME</button><button class="btn orange" id="sh">'+T('home')+'</button><button class="btn" id="sx">'+T('ret')+'</button>':''}</div>`);
   $('#overlay .card').classList.add('setcard');
   $('#howBtn').onclick=()=>{sfx.pop();howTo(()=>settings(inGame))};
   const close=()=>{closeOv();sfx.pop();if(inGame&&G&&!G.over)resumeCount()};
@@ -2249,6 +2309,8 @@ applyLang();fillSides('title');
 // first tap anywhere: full screen + sound (phones only allow these after a tap)
 addEventListener('pointerdown',()=>{goFull();audio();musicSync()},{once:true,capture:true});
 // no name or player picking at the start: the game opens straight on the home screen
+$('#shareBtn').onclick=()=>{audio();sfx.pop();parentGate(()=>shareGame(()=>{const c=$('#shareBtn .shcoin');if(c&&save.shared)c.remove();try{wallet()}catch(e){}}),()=>{})};
+if(save.shared){const c=document.querySelector('#shareBtn .shcoin');if(c)c.remove()}
 $('#mapBtn').onclick=()=>{audio();sfx.pop();whenReady('bg_map',openMap)};
 $('#playBtn').onclick=()=>{audio();sfx.pop();quickIntro()};
 $('#backTitle').onclick=()=>{sfx.pop();show('title')};
@@ -2640,16 +2702,16 @@ const GDESC={gold:'Pays 3 times the coins for the shake!',vip:'Pays double and w
   hiker:'Always orders the biggest shake on the menu, and pays 2.5 times the coins.',pirate:'Serve him and he gives you a treasure: a free power-up!',mermaid:'Serve her and everyone waiting in line pays double!',
   astro:'Serve him and time freezes for 6 seconds.',genie:'Serve him and your next shake makes itself, like magic!',turtle:'Serve him and the whole line waits much longer for 10 seconds.',lion:'Pays 4 times the coins, but he hates waiting: be quick!'};
 const GFACE={pirate:'38%',hiker:'45%',camera:'50%',lion:'50%',mermaid:'50%',genie:'50%',turtle:'50%'};
-function guestsCard(back){
-  overlay(`<h2 class="hhead">Special Fruits</h2><p class="sub">Each special fruit has a super-power! They visit your CHALLENGE games. Find them all on the Beach Tour!</p>
-    <div class="gcards">${ANIMALS.map(a=>{const own=aniHas(a);return `<button class="gcard anic ${own?'':'lock'}" data-k="${a.id}"><span class="anim"><img src="${A('c_'+a.id+'_'+(own?'joy':'happy'))}" alt="">${own?'':'<i>?</i>'}</span><b>${own?a.name:'???'}</b><span class="gtag" style="background:${a.col}">${a.tag}</span></button>`}).join('')}</div>
+function guestsCard(back){ // MEGA fruits: the same cards and the same info window as in COLLECTION > MEGA FRUITS
+  overlay(`<h2 class="hhead">MEGA Fruits</h2><p class="sub">Each MEGA fruit has a super-power! Find them on the Beach Tour.</p>
+    <div class="gcards anigrid">${ANIMALS.map((a,k)=>{const own=aniHas(a);return `<div class="anic ${own?'':'lock'}" data-a="${a.id}"><span class="anim"><img src="${A('c_'+a.id+'_'+(own?'joy':'happy'))}" alt="">${own?'':'<i>?</i>'}</span>
+      <b>${own?a.name:'???'}</b><span class="gtag" style="background:${a.col}">${a.tag}</span><small>${own?(k?'Found at '+BEACHES[aniBeach(k)].name:'Your first fruit!'):'🔍 Hiding somewhere on the map...'}</small></div>`}).join('')}</div>
     <div class="btns"><button class="btn orange" id="gback">BACK</button></div>`);
-  $('#overlay .card').classList.add('guestcard');
+  $('#overlay .card').classList.add('guestcard','megacard');
   $('#gback').onclick=()=>{sfx.pop();back()};
-  document.querySelectorAll('.gcard').forEach(b=>b.onclick=()=>{sfx.pop();const a=ANIMALS.find(x=>x.id===b.dataset.k),k=ANIMALS.indexOf(a),own=aniHas(a);
-    overlay(`<div class="gpow ${own?'':'lock'}"><span class="gbig"><img src="${A('c_'+a.id+'_joy')}" alt=""></span><div class="gtx"><span class="gtag big" style="background:${a.col}">${a.tag}</span><h2>${own?a.name:'???'}</h2><p>${a.desc}</p>${own?'':`<p class="gwhere">🔍 This fruit is hiding somewhere on the Beach Tour. Serve it a shake to find it!</p>`}</div></div>
-      <div class="btns"><button class="btn" id="gok">OK!</button></div>`);
-    $('#overlay .card').classList.add('guestcard');$('#gok').onclick=()=>{sfx.pop();guestsCard(back)}})}
+  document.querySelectorAll('#overlay .anic[data-a]').forEach(b=>b.onclick=()=>{const a=ANIMALS.find(x=>x.id===b.dataset.a),k=ANIMALS.indexOf(a),own=aniHas(a);
+    zoomInfo($('#overlay .card'),{img:`<img src="${A('c_'+a.id+'_'+(own?'joy':'happy'))}" alt="">`,cls:own?'':'zlock',tag:`<span class="gtag big" style="background:${a.col}">${a.tag}</span>`,name:own?a.name:'???',desc:String(a.desc).replace(/([.!?])\s+/g,'$1<br>'),
+      sub:own?(k?'Found at '+BEACHES[aniBeach(k)].name:'Your first fruit!'):'🔍 Hiding somewhere on the Beach Tour. Serve it a shake to find it!'})})}
 function sayShake(){ // the game shouts it out loud too (if the phone has a voice and sound is on)
   if(save.mute||!window.speechSynthesis)return;
   try{const u=new SpeechSynthesisUtterance("Let's shake!");u.lang='en-US';u.rate=.85;u.pitch=1.4;u.volume=1;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -2885,10 +2947,10 @@ function endQuick(){
   setTimeout(()=>{rec?sfx.win():sfx.wrong();
     overlay(`<h2>${rec?T('newhigh')+'!':T('gameover')}</h2><div class="qeinfo"><span class="qelvl">${T('level',{n:G.qlvl+1})}</span><span class="qediff" style="--dc:${DCOL[G.diff]}">${DLAB[G.diff]}</span></div>
       <div class="bigstars" style="font-family:var(--display);font-size:90px;color:var(--sun);-webkit-text-stroke:10px var(--ink);paint-order:stroke fill;line-height:1.1">${G.score}</div>
-      <div class="stats"><div><img src="${A('u_trophy')}" alt="">${T('bestN',{n:bestOf(G.diff)})}</div><div id="stC"><img src="${A('u_coin')}" alt=""><b id="stCn">${save.bank-G.earned}</b></div><div id="stK"><img src="${A('cupcoin')}" alt=""><b id="stKn">${(save.cups|0)-G.served}</b></div></div>
+      <div class="stats qstats"><div class="qsp"><img src="${A('u_coin')}" alt=""><b id="stCn">0</b></div><div class="qsp"><img src="${A('cupcoin')}" alt=""><b id="stKn">0</b></div><div class="qsp"><img src="${A('u_trophy')}" alt=""><b>${bestOf(G.diff)}</b></div></div>
       ${G.continued?'':`<div class="cdwrap" id="cdw"><div class="cdin"><button class="btn hsget keepb" id="wc"><svg viewBox="0 0 24 24" width="38" height="38"><rect x="2" y="4" width="20" height="16" rx="4" fill="#fff"/><path d="M10 8.5v7l6-3.5z" fill="#3fa535"/></svg>KEEP PLAYING +1 ♥</button><svg class="cdring" aria-hidden="true"><rect pathLength="100"/></svg></div></div>`}
       <div class="btns"><button class="btn orange" id="qh">${T('home')}</button><button class="btn" id="qa">${T('again')}</button></div>`);
-    $('#overlay .card').classList.add('qend');setTimeout(()=>{const a=$('#stCn'),b=$('#stKn');if(a){countUp(a,num(a),save.bank);sfx.coin()}if(b)countUp(b,num(b),save.cups|0)},700);
+    $('#overlay .card').classList.add('qend');setTimeout(()=>{const a=$('#stCn'),b=$('#stKn');if(a){countUp(a,0,G.earned);sfx.coin()}if(b)countUp(b,0,G.served|0)},700); // what you won in THIS game
     const cdw=$('#cdw');if(cdw){const inner=cdw.querySelector('.cdin'),sv=cdw.querySelector('.cdring'),rc=sv.querySelector('rect'),w=inner.offsetWidth,h=inner.offsetHeight;
       sv.setAttribute('viewBox',`0 0 ${w} ${h}`);sv.setAttribute('width',w);sv.setAttribute('height',h);rc.setAttribute('x',3);rc.setAttribute('y',3);rc.setAttribute('width',w-6);rc.setAttribute('height',h-6);rc.setAttribute('rx',(h-6)/2);
       requestAnimationFrame(()=>requestAnimationFrame(()=>rc.classList.add('go')));
@@ -3276,10 +3338,10 @@ function openShop(tab,keep){if(tab)shopTab=tab;if(!tab&&shopTab==='boosts'&&!win
   overlay(`<button class="xclose" id="shx" aria-label="Close">×</button><div class="shophead"><div class="spills"><div class="pill cuppill" id="shK">${cupIc()}<span>${save.cups|0}</span></div><div class="pill" id="shC">${coinIc()}<span>${save.bank}</span></div></div><h2>${BM?'BOOSTS':'SHOP'}</h2><span></span></div>
     <div class="stabs" ${BM?'hidden':''}>${[['decor','Stand'],['blenders','Blenders'],['cups','Cup Shop']].map(([k,n])=>`<button class="stab ${k===shopTab?'on':''} ${k==='cups'?'cuptab':''}" data-t="${k}">${k==='cups'?`<img class="tabcup" src="${A('cup_rainbow')}" alt="">`:''}${n}</button>`).join('')}</div>
     <div class="sgrid">${items.join('')}</div>
-    <div class="btns shopbtns"><button class="btn small watch giftb g2" id="wgift"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="2" y="4" width="20" height="16" rx="4" fill="#fff"/><path d="M10 8.5v7l6-3.5z" fill="#2f9a2a"/></svg><b class="gt">${giftLeft()>0?'⏱ '+mmss(giftLeft()):'FREE GIFT'}</b></button>${NATIVE?'':'<button class="btn small soonb" id="toStore" disabled>More coins<span class="soon">SOON</span></button>'}</div>`,kp);
+    <div class="btns shopbtns"><button class="btn small watch giftb g2" id="wgift"><svg viewBox="0 0 24 24" width="26" height="26"><rect x="2" y="4" width="20" height="16" rx="4" fill="#fff"/><path d="M10 8.5v7l6-3.5z" fill="#2f9a2a"/></svg><b class="gt">${giftLeft()>0?'⏱ '+mmss(giftLeft()):(BM?'FREE BOOST':'FREE COINS')}</b></button>${NATIVE?'':'<button class="btn small soonb" id="toStore" disabled>More coins<span class="soon">SOON</span></button>'}</div>`,kp);
   if($('#toStore'))$('#toStore').onclick=()=>{sfx.pop();toast('Coming soon!')};
   const wf=$('#wfree');if(wf){if((save.adFreeBoost|0)>=2)wf.disabled=true;wf.onclick=()=>{wf.disabled=true;showRewarded(()=>{save.boosts.turbo=(save.boosts.turbo|0)+1;save.adFreeBoost=(save.adFreeBoost|0)+1;persist();openShop();sfx2.perfect();gotIt({img:'b_turbo',name:'Turbo Blend',sub:'You have '+save.boosts.turbo+' now. Use it during a level!'})})}}
-  const wg=$('#wgift');if(wg){clearInterval(window.__giftT);if(giftLeft()>0){wg.disabled=true;window.__giftT=setInterval(()=>{const b=$('#wgift');if(!b){clearInterval(window.__giftT);return}const l=giftLeft();const gt=b.querySelector('.gt')||b.lastChild;if(l<=0){clearInterval(window.__giftT);b.disabled=false;gt.textContent='FREE GIFT'}else gt.textContent='⏱ '+mmss(l)},1000)}
+  const wg=$('#wgift');if(wg){clearInterval(window.__giftT);if(giftLeft()>0){wg.disabled=true;window.__giftT=setInterval(()=>{const b=$('#wgift');if(!b){clearInterval(window.__giftT);return}const l=giftLeft();const gt=b.querySelector('.gt')||b.lastChild;if(l<=0){clearInterval(window.__giftT);b.disabled=false;gt.textContent=window.__boostMode?'FREE BOOST':'FREE COINS'}else gt.textContent='⏱ '+mmss(l)},1000)}
     wg.onclick=()=>{wg.disabled=true;showRewarded(()=>{const BM2=window.__boostMode;if(BM2)save.adBoostAt=Date.now();else save.adGiftAt=Date.now();const r=Math.random(),c0=save.bank,k0=save.cups|0;let it;
     if(BM2){const ks=Object.keys(BOOSTS),k=ks[Math.floor(Math.random()*ks.length)];save.boosts[k]=(save.boosts[k]|0)+1;it={img:BOOSTS[k].ic,name:BOOSTS[k].name,sub:'A free power-up! Another one in 3 minutes.'}}
     else if(r<.45){const c=150+Math.floor(Math.random()*8)*50;save.bank+=c;it={img:'ic_bag',name:'+'+c+' coins',sub:'Your free gift! Another one in 30 minutes.'}}
@@ -3436,6 +3498,7 @@ function openStoreIn(){
 function restorePurchases(){ // in the app this asks Google Play / the App Store for earlier purchases (No Ads, Beach Pass)
   toast('Purchases restored')}
 
+['click','pointerup','touchend'].forEach(ev=>document.addEventListener(ev,e=>{if(window.__noTapUntil&&performance.now()<window.__noTapUntil&&!(e.target.closest&&e.target.closest('#loader'))){e.stopPropagation();e.preventDefault()}},true));
 /* ================= LOADING SCREEN: the shake fills up while the game gets its pictures ready ================= */
 (function(){const L=$('#loader');if(!L)return;const t0=performance.now();let done=0,shown=0;
   const list=['aw_main','aw_'+(save.stand||'main'),'lcup_empty','lcup_full','drops','bg_load','bg_splash','bg_map','u_coin','u_star','u_trophy','cup_rainbow','blend_empty','blend_full','blend_run',BEACHES[0].bg,heroId()+'_stand',heroId()+'_mix',heroId()+'_cheer']
@@ -3449,7 +3512,7 @@ function restorePurchases(){ // in the app this asks Google Play / the App Store
     $('#lfill').style.width=Math.round(f*100)+'%';$('#ltxt').textContent=(f>=1?'Ready!':'Blending… '+Math.round(f*100)+'%')};
   // loading done: the bar gives way to a pulsing TAP TO PLAY; the game (and its music) starts on that tap
   const finish=()=>{set(1);setTimeout(()=>{L.classList.add('ready');$('#ltxt').textContent='TAP TO PLAY';
-    let gone=false;const go=()=>{if(gone)return;gone=true;try{audio();sfx.pop()}catch(e){}L.classList.add('out');setTimeout(()=>L.remove(),550);setTimeout(welcome,700)};
+    let gone=false;const go=()=>{if(gone)return;gone=true;window.__noTapUntil=performance.now()+800;try{audio();sfx.pop()}catch(e){}L.classList.add('out');setTimeout(()=>L.remove(),550);setTimeout(welcome,700)};
     L.addEventListener('pointerdown',go);addEventListener('keydown',function k(e){if(e.key==='Enter'||e.key===' '){removeEventListener('keydown',k);go()}})},400)};
   const tick=()=>{const want=done/total,timeF=Math.min(1,(performance.now()-t0)/1800);shown=Math.min(want,timeF,shown+.04);set(shown);
     if(done>=total&&timeF>=1)return finish();requestAnimationFrame(tick)};
