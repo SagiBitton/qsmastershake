@@ -1601,7 +1601,7 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 #title .gearbtn,#title .tb1,html.phone #title .gearbtn,html.phone #title .tb1{translate:calc(-1*var(--kxl)) calc(-1*var(--oyt))!important}
 #title #boostBtn,#title #shopBtn,html.phone #title #boostBtn,html.phone #title #shopBtn{translate:var(--kxr) calc(-1*var(--oyt))!important}
 #title .wallet,html.phone #title .wallet{translate:var(--kxr) var(--oyb)!important}
-#title #dailyBtn,html.phone #title #dailyBtn,#title #shareBtn,html.phone #title #shareBtn{translate:var(--mxr) var(--oyb)!important}
+#title #dailyBtn,html.phone #title #dailyBtn{translate:var(--mxr) var(--oyb)!important}
 #title .tbtn#shareBtn:not(#dailyBtn){position:absolute;right:34px!important;top:auto!important;bottom:384px!important;width:124px!important;z-index:3}
 #shareBtn .shpic{position:relative;display:block;width:104px;height:96px;margin:0 auto}
 #shareBtn .shpic img:first-child{width:104px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(74,42,20,.35))}
@@ -1649,6 +1649,28 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 /* how-to > MEGA fruits: same grid as the collection */
 .megacard .gcards.anigrid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;grid-auto-rows:auto;flex-wrap:nowrap!important;gap:16px;max-height:430px;overflow-y:auto;padding:10px 6px 14px;width:100%;box-sizing:border-box;touch-action:pan-y}
 .megacard{width:1080px!important;max-width:94%}
+/* round 23 */
+/* the ready drink waits right next to the blender; the line of customers moves up to it (up to 5 people) */
+#game #ready{left:calc(1056px + var(--mxr))!important}
+.slot .cust{scale:var(--qs,1);transform-origin:50% 100%}
+.slot .bubble{scale:var(--qs,1);transform-origin:50% 425px}
+/* daily gift in the same right-hand column as the wallet */
+#title #dailyBtn,html.phone #title #dailyBtn{translate:var(--kxr) var(--oyb)!important}
+#title #dailyBtn.dailyfloat{right:44px!important}
+/* INVITE FRIENDS: bottom-left corner, cups + a small coin on a clear background */
+#title #shareBtn{position:absolute;left:22px!important;bottom:14px!important;top:auto!important;right:auto!important;z-index:5;width:auto!important;background:none;padding:0;display:flex;flex-direction:column;align-items:center;translate:calc(-1*var(--kxl)) var(--oyb)!important}
+#title #shareBtn .shpic{width:110px;height:96px}
+#title #shareBtn .shpic img:first-child{width:110px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(74,42,20,.35))}
+#title #shareBtn .shcoin{right:-10px;bottom:-4px;width:48px;height:48px}
+#title #shareBtn .shlab{display:block;margin-top:6px;font-family:var(--display);font-size:24px;color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;line-height:1;white-space:nowrap}
+/* shop tabs look like the COLLECTION tabs */
+#overlay .shopcard .stabs{display:inline-flex!important;gap:4px!important;padding:5px!important;background:var(--cream)!important;border:5px solid var(--ink)!important;border-radius:999px!important;box-shadow:0 6px 0 rgba(74,42,20,.35)!important;margin:0 auto!important;justify-self:center;align-self:center;width:auto!important}
+#overlay .shopcard .stab{min-width:200px;border:0!important;box-shadow:none!important;background:transparent!important;padding:7px 22px 10px!important;font-size:28px!important;color:#9a7b5c!important;transform:none!important;border-radius:999px!important;height:auto!important}
+#overlay .shopcard .stab.on{background:linear-gradient(180deg,#ffe36b,var(--sun))!important;color:var(--ink)!important;box-shadow:inset 0 -4px 0 rgba(160,100,0,.25),0 0 0 3px var(--ink)!important}
+#overlay .shopcard .stab .tabcup{height:40px;margin:-8px 4px -8px -4px;vertical-align:middle}
+/* game over: KEEP PLAYING video button is purple */
+#overlay .qend #wc.keepb,#wc.keepb{background:linear-gradient(180deg,#c99bff,#9b5cf0 50%,#7a3fd1)!important;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 6px 0 #5a2a9e!important;text-shadow:0 3px 0 #5a2a9e!important;color:#fff}
+#wc.keepb svg path{fill:#7a3fd1}
 </style>
 
   <div id="loader">
@@ -1686,7 +1708,7 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
     <button class="round gearbtn" id="setBtn1" aria-label="Settings"><img src="a/u_gear.webp" alt=""><span class="tlab">SETTINGS</span></button>
     <button class="tbtn" id="shopBtn" aria-label="Shop"><i class="cbtn teal"><img src="a/chest_open.webp" alt=""></i><span>SHOP</span></button>
     <button class="tbtn" id="boostBtn" aria-label="Boosts"><i class="cbtn amber"><svg viewBox="0 0 24 24" width="58" height="58"><path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2z" fill="#fff8d0" stroke="#4a2a14" stroke-width="2" stroke-linejoin="round"/><path d="M13 4.5 7.4 12.3" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".9"/></svg></i><span>BOOSTS</span></button>
-    <button class="tbtn dailyfloat sharefloat" id="shareBtn" aria-label="Share with a friend"><span class="shpic"><img src="a/share_cups.webp" alt=""><img class="shcoin" src="a/u_coin.webp" alt=""></span><span>SHARE</span></button>
+    <button class="sharefloat" id="shareBtn" aria-label="Invite friends"><span class="shpic"><img src="a/share_cups.webp" alt=""><img class="shcoin" src="a/u_coin.webp" alt=""></span><span class="shlab">INVITE FRIENDS</span></button>
     <button class="tbtn dailyfloat" id="dailyBtn" aria-label="Daily prize"><img src="a/gift.webp" alt=""><span>DAILY</span></button>
   </section>
 
@@ -1997,6 +2019,14 @@ function loadAtlas(){for(const f in ATLAS){const [h,items]=ATLAS[f],im=new Image
     cutPiece(im,x,w,h,n,k=>document.querySelectorAll('img[src$="a/'+k+'.webp"]').forEach(e=>e.src=CURL[k]));x+=w}};im.src=STRIPSRC(f)}}
 loadAtlas();
 const SLOTX=[808,576,344,112];
+// up to 5 customers in line: customer 1 stands right next to the ready cup, the rest follow with equal gaps.
+// If 5 don't fit between the power-ups and the cup (narrower screens), everyone in line gets a little smaller.
+const QMAX=5;let QF={x1:808,sp:232,sc:1};
+function queueFit(){try{const g=$('#game'),cup=$('#ready'),hud=$('#hud'),bo=$('#boosts');
+  const cupL=cup.offsetLeft,lim=(hud?hud.offsetLeft:0)+(bo&&!bo.hidden?bo.offsetLeft+bo.offsetWidth:80)+10,right=cupL-6;
+  const sc=Math.max(.72,Math.min(1,(right-lim)/(4*232+230))),sp=232*sc;
+  QF={x1:right-115-115*sc,sp,sc};g.style.setProperty('--qs',sc.toFixed(3))}catch(e){}}
+const slotX=k=>QF.x1-k*QF.sp;
 
 
 /* ================= SAVE ================= */
@@ -2790,12 +2820,12 @@ function walkTick(t){const dt=walkT?Math.min(.05,(t-walkT)/1000):1/60;walkT=t;
 function layout(){ // line order = arrival order; customer 1 stands closest to the blender
   const line=G.q.filter(c=>!c.leaving);
   // spots count everyone still on screen, so the line only moves up once a customer has really left
-  G.q.forEach((c,k)=>{if(!c.leaving)moveTo(c,SLOTX[k],()=>{if(!c.arrived){c.arrived=true;c.el.classList.remove('enter');hint()}})});
+  queueFit();G.q.forEach((c,k)=>{if(!c.leaving)moveTo(c,slotX(k),()=>{if(!c.arrived){c.arrived=true;c.el.classList.remove('enter');hint()}})});
   G.q.forEach(c=>{c.el.classList.toggle('sel',c===line[0]);c.el.querySelector('.qn').textContent=c.leaving?'':(line.indexOf(c)+1)});
   hint();
 }
 function spawn(){
-  if(G.q.length>=4)return;
+  if(G.q.length>=QMAX)return;
   const used=G.q.map(c=>c.who);
   G.recent=G.recent||[];const home=!G.quick&&aniAt(G.bi);const ALLP=PEOPLE;
   if(home&&!aniHas(home)&&!G.aniCame&&G.served>=2&&!used.includes(home.id)&&Math.random()<.5){G.aniCame=true;return spawnWho(home.id)}let pool=ALLP.filter(p=>!used.includes(p)&&!G.recent.includes(p));if(!pool.length)pool=ALLP.filter(p=>!used.includes(p));if(!pool.length)return;
