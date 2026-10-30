@@ -19,8 +19,8 @@
 #game.quick #hud{gap:7px!important}#game.quick #hud .pill{padding-left:6px!important;padding-right:12px!important}#game.quick #evpill{font-size:19px!important;padding:4px 10px!important}#game.quick #hud .grow{min-width:0!important}
 
 /* phones: keep the right-side home buttons a little away from the rounded screen corners */
-html.phone #title #boostBtn,html.phone #title #shopBtn{translate:calc(var(--oxr) - 16px) calc(-1*var(--oyt) + 4px)}
-html.phone #title #dailyBtn,html.phone #title .wallet{translate:calc(var(--oxr) - 16px) calc(var(--oyb) - 6px)}
+html.phone #title #boostBtn,html.phone #title #shopBtn{translate:calc(var(--sxr) - 16px) calc(-1*var(--oyt) + 4px)}
+html.phone #title #dailyBtn,html.phone #title .wallet{translate:calc(var(--sxr) - 16px) calc(var(--oyb) - 6px)}
 
 /* map: the strip left of the first beach shows the same map picture (lined up), and no rubber-band pull past the ends */
 #mapScroll{background:#6fd6ef url(a/bg_mapx.webp) 0 0/calc(2578px*var(--mz,1)) calc(720px*var(--mz,1)) repeat-x!important;background-origin:content-box!important;background-attachment:local!important;overscroll-behavior:none}
@@ -39,25 +39,25 @@ html.phone #title #dailyBtn,html.phone #title .wallet{translate:calc(var(--oxr) 
 html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-action:none;background:var(--sea-deep);font-family:var(--body);color:var(--ink);-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 #app{touch-action:none;overscroll-behavior:none;position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,var(--sea),var(--sea-deep));padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
 #app::before{content:"";position:absolute;inset:-40px;background:var(--fill,none) center/cover;filter:blur(18px) brightness(.85) saturate(1.1);transition:background-image .3s}
-#stage{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center center;overflow:visible;--oxl:0px;--oxr:0px;--oyt:0px;--oyb:0px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#7fd3f0}
+#stage{position:absolute;width:1280px;height:720px;left:50%;top:50%;transform-origin:center center;overflow:visible;--oxl:0px;--oxr:0px;--oyt:0px;--oyb:0px;--sxl:0px;--sxr:0px;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#7fd3f0}
 .screen{position:absolute;inset:0;overflow:visible}
 .screen::before{content:"";position:absolute;top:calc(-1*var(--oyt));bottom:calc(-1*var(--oyb));left:calc(-1*var(--oxl));right:calc(-1*var(--oxr));background:inherit;z-index:-1;pointer-events:none}
 #app::before{display:none!important}
 /* EDGE ANCHORS: on screens wider or taller than the game, buttons hug the real screen edges */
-#title .gearbtn,#title .tb1{translate:calc(-1*var(--oxl)) calc(-1*var(--oyt))}
-#title #boostBtn,#title #shopBtn{translate:var(--oxr) calc(-1*var(--oyt))}
-#title #dailyBtn,#title .wallet{translate:var(--oxr) var(--oyb)}
+#title .gearbtn,#title .tb1{translate:calc(-1*var(--sxl)) calc(-1*var(--oyt))}
+#title #boostBtn,#title #shopBtn{translate:var(--sxr) calc(-1*var(--oyt))}
+#title #dailyBtn,#title .wallet{translate:var(--sxr) var(--oyb)}
 #title .h-boy,#title .h-girl{translate:calc(-.6*var(--oxl)) var(--oyb)}
 #title .logo{translate:0 calc(-.5*var(--oyt))}#title .btnrow,#title .tag{translate:0 calc(.15*var(--oyb))}
-#map .head{left:calc(-1*var(--oxl))!important;right:calc(-1*var(--oxr))!important;top:calc(18px - var(--oyt))!important}
+#map .head{left:calc(-1*var(--sxl))!important;right:calc(-1*var(--sxr))!important;top:calc(18px - var(--oyt))!important}
 #map .maphint{translate:0 var(--oyb)}
 #mapScroll{background:url(a/bg_map.webp) left center/auto 100% repeat-x}
 #prizes::before{background:radial-gradient(circle at 50% 30%,#fff3cf,#f0d9a6 70%,#d9b97c)!important}
-#prizes .phead{left:calc(-1*var(--oxl))!important;right:calc(-1*var(--oxr))!important;top:calc(16px - var(--oyt))!important}
-#prizeGrid{left:calc(24px - var(--oxl))!important;right:calc(24px - var(--oxr))!important;top:calc(128px - var(--oyt))!important;bottom:calc(16px - var(--oyb))!important}
-#game #hud{left:calc(14px - var(--oxl));right:calc(14px - var(--oxr))}
+#prizes .phead{left:calc(-1*var(--sxl))!important;right:calc(-1*var(--sxr))!important;top:calc(16px - var(--oyt))!important}
+#prizeGrid{left:calc(24px - var(--sxl))!important;right:calc(24px - var(--sxr))!important;top:calc(128px - var(--oyt))!important;bottom:calc(16px - var(--oyb))!important}
+#game #hud{left:calc(14px - var(--sxl));right:calc(14px - var(--sxr))}
 #game #boosts{translate:none!important} /* FIX: #boosts sits inside #hud, which already hugs the left edge and the top */
-#game #tray{left:calc(16px - var(--oxl)*.5)}#game #panel{left:calc(830px + var(--oxr)*.5)}
+#game #tray{left:calc(16px - var(--sxl)*.5)}#game #panel{left:calc(830px + var(--sxr)*.5)}
 #stage.port{width:720px;height:1280px}
 #stage.port #title .logo{top:200px;scale:.9;transform-origin:50% 0}
 #stage.port #title .tag{top:560px;font-size:24px;z-index:5}
@@ -72,7 +72,7 @@ html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none;touch-ac
 #game #slots,#game .counter,#game #blender,#game #ready,#game #decor{translate:0 calc(var(--oyb) - 188px*(var(--gy,1) - 1))}
 #game #tray,#game #panel{height:calc(188px*var(--gy,1));translate:0 calc(var(--oyb) - 188px*(var(--gy,1) - 1))}
 #game #combo{translate:0 calc(var(--oyt) + var(--oyb) - 188px*(var(--gy,1) - 1))}
-#game #tray{width:calc(800px + (var(--oxl) + var(--oxr))*.5)} /* wide screens: the tray fills the gap up to the blend panel */
+#game #tray{width:calc(800px + (var(--sxl) + var(--sxr))*.5)} /* wide screens: the tray fills the gap up to the blend panel */
 /* where this level takes place: a little wooden beach sign hanging from the awning, above the blender */
 @font-face{font-family:"Chalk Sign";src:url(a/chalk-700.woff2) format("woff2");font-weight:700;font-display:swap}
 @font-face{font-family:"Chalk Sign";src:url(a/chalk-400.woff2) format("woff2");font-weight:400;font-display:swap}
@@ -1564,6 +1564,35 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 #map .head h2{left:46%!important;font-size:44px!important}
 
 #evpill{white-space:nowrap!important;font-size:22px!important;line-height:1.1!important;max-height:46px}
+
+/* round 21: bigger, easier controls that use the whole phone screen (but stay clear of the camera and the corners) */
+/* the ingredient tray and the "picked" panel stretch from screen edge to screen edge and grow taller */
+#game #tray,#game #panel{top:494px!important;height:calc(216px*var(--gy,1))!important;translate:0 calc(var(--oyb) - 216px*(var(--gy,1) - 1))!important}
+#game #tray{left:calc(10px - var(--sxl))!important;width:calc(810px + var(--sxl) + var(--sxr)*.3)!important;gap:6px!important;padding:8px 10px!important}
+#game #panel{left:calc(830px + var(--sxr)*.3)!important;width:calc(440px + var(--sxr)*.7)!important;padding:12px 14px!important}
+#game #panel.row #jar{width:100%;gap:8px!important}
+#game #panel.row #jar .s{width:auto!important;height:78px!important;border-radius:20px}
+#game #panel.row #jar .s img{width:88%;height:66px}
+#game #panel.row #blendBtn{width:auto!important;flex:1;height:80px!important;font-size:46px!important}
+#game #panel.row .acts{width:100%;gap:16px!important}
+#game #panel.row #trash{width:76px;height:76px;flex:none}#game #panel.row #trash svg{width:48px;height:48px}
+/* the blender: a little bigger and closer to the right edge, and it bounces when the drink is ready to blend */
+#game #blender{left:calc(1150px + var(--sxr)*.6)!important;top:226px!important;height:258px!important}
+/* map: stars / cups / coins as big as in the game, a little away from the edge */
+#map .mwallet{font-size:34px!important;padding:6px 18px 6px 8px!important;gap:8px!important;translate:-24px 0}
+#map .mwallet img{width:50px!important;height:50px!important}
+#map .mwallet i{height:38px!important}
+/* boosts and shop windows: bigger coin and cup counters */
+.spills{gap:14px!important}.spills .pill,.shophead .cuppill{font-size:34px!important}.spills .pill img,.shophead .cuppill img{width:52px!important;height:52px!important}
+/* home: bigger corner buttons (still inside the screen) and bigger BEACH TOUR / CHALLENGE */
+#title .gearbtn,#title .gearbtn img,#title .tb1,#title .tb1 img{width:122px!important;height:122px!important}
+#title .gearbtn{left:24px!important;top:10px!important}#title .tb1{left:176px!important;top:10px!important}
+#title .tbtn:not(#dailyBtn){width:122px!important;top:10px!important}#title .tbtn:not(#dailyBtn) .cbtn{width:122px!important;height:122px!important}
+#title .tbtn:not(#dailyBtn) .cbtn img{width:84px!important;height:84px!important}#title .tbtn:not(#dailyBtn) .cbtn svg{width:80px!important;height:80px!important}
+#title #shopBtn{right:22px!important}#title #boostBtn{right:168px!important}
+#title .tbtn span,#title .tlab{font-size:27px!important}
+#title .btnrow{top:446px!important;gap:16px!important}
+#title .btnrow .btn{width:420px!important;height:104px!important;font-size:50px!important}
 </style>
 
   <div id="loader">
@@ -2086,6 +2115,9 @@ function fit(){const st=$('#stage'),vv=window.visualViewport,W=Math.round(vv?vv.
   const sw=(ROT?BH:BW)*K,sh=(ROT?BW:BH)*K,gl=cx-sw/2,gr=W-(cx+sw/2),gt=cy-sh/2,gb=H0-(cy+sh/2);
   const m=ROT===90?[gt,gb,gr,gl]:ROT===-90?[gb,gt,gl,gr]:[gl,gr,gt,gb];
   ['--oxl','--oxr','--oyt','--oyb'].forEach((v,i)=>st.style.setProperty(v,(Math.max(0,m[i])/K+2).toFixed(1)+'px'));
+  // controls (buttons, counters) may reach out past the game box too, but never into the notch / camera / rounded corners
+  const ins=ROT===90?[sa.t,sa.b,sa.r,sa.l]:ROT===-90?[sa.b,sa.t,sa.l,sa.r]:[sa.l,sa.r,sa.t,sa.b],edge=PHONE?10:0;
+  ['--sxl','--sxr'].forEach((v,i)=>st.style.setProperty(v,(Math.max(0,m[i]-ins[i]-edge)/K).toFixed(1)+'px'));
   // taller-than-16:9 screens: grow the controls into the spare room (up to +45% tray height, +20% buttons)
   const gy=Math.min(1.45,1+Math.max(0,m[3])/K/260);st.style.setProperty('--gy',gy.toFixed(3));st.style.setProperty('--gz',Math.min(gy,1.2).toFixed(3));
   st.style.setProperty('--mz',Math.min(1.35,(720+Math.max(0,m[2])/K+Math.max(0,m[3])/K)/720).toFixed(3))}
@@ -2415,7 +2447,7 @@ function buildTray(menu){
 
 function applyCap(){ // the tray must also hold what customers already in line ordered from the previous menu
   const all=[...new Set([...G.L.menu,...G.q.filter(c=>!c.leaving).map(c=>c.r)])];buildTray(all);
-  G.cap=6;$('#panel').classList.add('row');$('#jar').style.gridTemplateColumns='repeat(6,58px)';renderJar()} // always 6 slots in one row, BLEND and the bin below
+  G.cap=6;$('#panel').classList.add('row');$('#jar').style.gridTemplateColumns='repeat(6,minmax(0,1fr))';renderJar()} // always 6 slots in one row, BLEND and the bin below
 /* QUICK PLAY: no clock, 3 hearts, it keeps getting harder; play for your best score */
 const QTIERS=[['splash','bhoney','sunrise'],['kiwi','melon','berry','samba'],['grand','copa','lagoon','cliff','aegean','amalfi'],
   ['bali','aloha','golden','surfer','fiesta','miami','desert','maldive','santo','gelato'],['bondi','penguin','doge']];
@@ -2566,7 +2598,8 @@ function start(bi,li,opt){
   G.top=top;setReady(null);applyCap();setBoy('stand');if(G.quick)renderHearts();updHud();
   cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);
   G.counting=true;const cd=()=>countdown(()=>{if(G&&!G.over){G.counting=false;G.last=performance.now()}});
-  if(!save.tut)howTo(()=>{save.tut=1;persist();cd()});else cd();
+  // the how-to shows the first time you play each mode (Beach Tour and Challenge)
+  const tk=G.quick?'tutq':'tut';if(!save[tk])howTo(()=>{save[tk]=1;persist();cd()});else cd();
 }
 // picture guide shown before the very first level (and from the pause menu), so kids can play without reading much
 // one shared "see it big" window: picture, name, what it does, BACK + X
@@ -2578,7 +2611,7 @@ function howTo(done,page){ // one window, two pages you can swipe (or use the ar
   const bo=(id)=>{const b=BOOSTS[id];return `<button class="hbo" data-b="${id}"><img src="${A(b.ic)}" alt=""><div><b>${b.name}</b><small>Tap to see</small></div></button>`};
   overlay(`<div class="hvp"><div class="htrack" id="htr">
       <div class="hpage"><h2 class="hhead">How to play</h2>
-        <div class="hsteps">${st(1,'cup_rainbow','See what the<br>customer wants')}${st(2,'i_strawberry','Tap the fruits<br>in the order')}${st(3,BL('full'),'Press<br>BLEND!')}${st(4,'c_braids_joy','Tap the customer<br>to serve')}</div>
+        <div class="hsteps">${st(1,'cup_rainbow','See what the<br>customer wants')}${st(2,'i_strawberry','Tap the fruits<br>in the order')}${st(3,BL('full'),'Tap BLEND!<br>or the blender')}${st(4,'c_braids_joy','Tap the customer<br>to serve')}</div>
         <div class="htips"><span><img src="${A('u_star')}" alt="">Earn coins to win stars</span><span><img src="${A('fx_burst')}" alt="">Serve fast for PERFECT!</span></div></div>
       <div class="hpage"><h2 class="hhead">Power-ups</h2><p class="sub" style="margin:0 0 12px">Tap a power-up to see what it does!</p>
         <div class="hboosts">${Object.keys(BOOSTS).map(bo).join('')}</div></div>
@@ -3211,7 +3244,7 @@ function needMore(kind,miss,back){sfx.wrong();
 }
 /* ---------- shop ---------- */
 if(SKEY==='shakemaster.demo'&&!save.demoFilled){try{
-  save.bank=12850;save.cups=340;save.tut=1;save.welcome=1;save.best=4820;save.stars={};save.prizes={};save.col={};save.aniGot={};
+  save.bank=12850;save.cups=340;save.tut=1;save.tutq=1;save.welcome=1;save.best=4820;save.stars={};save.prizes={};save.col={};save.aniGot={};
   BEACHES.slice(0,10).forEach(b=>b.levels.forEach((L,li)=>{save.stars[b.id+'-'+li]=3;save.prizes[b.id+'-'+li]=1;(L.menu||[]).forEach(r=>save.col[r]=1)}));
   BEACHES[10]&&(save.stars[BEACHES[10].id+'-0']=2);ANIMALS.slice(0,7).forEach(a=>save.aniGot[a.id]=1);
   save.boosts={freeze:3,turbo:2,patience:3,time:2};save.demoFilled=1;persist()}catch(e){}}
