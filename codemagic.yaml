@@ -36,8 +36,13 @@ workflows:
       - name: Build number (always higher than the last one in App Store Connect)
         script: |
           cd app-project/ios/App
-          LATEST=$(app-store-connect get-latest-app-store-build-number "$(app-store-connect apps list --bundle-id-identifier com.mastershake.game --strict-match-identifier --json | python3 -c 'import sys,json;print(json.load(sys.stdin)[0]["id"])')" 2>/dev/null || echo 0)
-          agvtool new-version -all $(( ${LATEST:-0} + 1 ))
+          APP_ID=$(app-store-connect apps list --bundle-id-identifier com.mastershake.game --strict-match-identifier --json | python3 -c 'import sys,json;print(json.load(sys.stdin)[0]["id"])')
+          AS=$(app-store-connect get-latest-app-store-build-number "$APP_ID" 2>/dev/null || echo 0)
+          TF=$(app-store-connect get-latest-testflight-build-number "$APP_ID" 2>/dev/null || echo 0)
+          # highest of: App Store, TestFlight, and this Codemagic build counter (so the number always goes up)
+          NEXT=$(python3 -c "import sys;print(max(int(x or 0) for x in sys.argv[1:])+1)" "${AS:-0}" "${TF:-0}" "$(( ${BUILD_NUMBER:-0} ))")
+          echo "Build number: $NEXT (App Store $AS, TestFlight $TF)"
+          agvtool new-version -all $NEXT
           agvtool new-marketing-version 1.0
       - name: Build the app (.ipa)
         script: |
