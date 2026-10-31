@@ -10,6 +10,7 @@ put('GADApplicationIdentifier',`<string>${ADMOB_IOS_APP_ID}</string>`);
 put('SKAdNetworkItems',`<array>\n\t\t<dict><key>SKAdNetworkIdentifier</key><string>cstr6suwn9.skadnetwork</string></dict>\n\t</array>`);
 put('UIRequiresFullScreen','<true/>');
 put('UIStatusBarHidden','<true/>');
+put('UIViewControllerBasedStatusBarAppearance','<false/>'); // never show the clock / Wi-Fi / battery over the game
 // iPhone: landscape AND upright. When the phone is upright the game turns itself sideways (fit() in index.html), and the
 // iOS home bar follows the phone, so you can leave the game from the bottom or from the side.
 put('UISupportedInterfaceOrientations','<array>\n\t\t<string>UIInterfaceOrientationLandscapeLeft</string>\n\t\t<string>UIInterfaceOrientationLandscapeRight</string>\n\t\t<string>UIInterfaceOrientationPortrait</string>\n\t</array>');
@@ -32,6 +33,7 @@ enum GameChrome {
         class_replaceMethod(cls, #selector(getter: UIViewController.preferredScreenEdgesDeferringSystemGestures), imp_implementationWithBlock(edges), "Q@:")
         let hide: @convention(block) (AnyObject) -> Bool = { _ in true }
         class_replaceMethod(cls, #selector(getter: UIViewController.prefersHomeIndicatorAutoHidden), imp_implementationWithBlock(hide), "B@:")
+        class_replaceMethod(cls, #selector(getter: UIViewController.prefersStatusBarHidden), imp_implementationWithBlock(hide), "B@:")
     }
 }
 `;
