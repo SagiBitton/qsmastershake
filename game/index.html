@@ -1675,6 +1675,41 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 #title #shareBtn{bottom:44px!important;left:30px!important}
 #title #shareBtn .invimg{width:136px!important;height:136px!important;max-width:none!important;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(74,42,20,.35));animation:giftHop 1.6s ease-in-out infinite;animation-delay:.8s}
 #title #shareBtn .shlab{margin-top:6px!important;font-size:25px!important}
+.dblc{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px auto 0;padding:8px 20px;border:5px solid var(--ink);border-radius:26px;background:radial-gradient(circle at 50% 35%,#fff8d8,#ffe08a 70%);box-shadow:0 6px 0 rgba(74,42,20,.4);width:max-content;max-width:94%}
+.dblc{flex-shrink:0;gap:8px;padding:6px 12px}.dblc img{width:36px;height:36px}.dblc b{white-space:nowrap;font-family:var(--display);font-size:24px;line-height:1.05;text-align:left;color:#4a2a14}.dblc b small{display:block;font-family:var(--body,inherit);font-size:13px;font-weight:900;color:#9a6b2c}
+.dblc .btn.watch{white-space:nowrap;animation:hsPulse 1s ease-in-out infinite}
+/* round 18: bigger order fruits (cup moved up next to the name, fruits fill the bubble) */
+.bubble.b2{width:240px!important;padding:5px 6px 7px!important}
+.bubble.b2 .bh{gap:5px;margin:0 0 3px}
+.bubble.b2 .bh .cup{flex:0 0 30px;height:38px!important;width:30px!important;object-fit:contain;margin:-4px 2px -4px 0;filter:none}
+.bubble.b2 .nm,.bubble.b2 .nm.long{font-size:18px!important}
+.bubble.b2 .nm.long{font-size:14px!important}
+.bubble.b2 .bb{padding:3px;justify-content:center}
+.bubble.b2 .ings,.bubble.b2 .ings.n1,.bubble.b2 .ings.n2,.bubble.b2 .ings.n3{grid-template-columns:repeat(var(--nc,3),74px)!important;gap:2px!important}
+.bubble.b2 .ings img,.bubble.b2 .ings.n1 img,.bubble.b2 .ings.n3 img{width:74px!important;height:70px!important;padding:1px}
+.bubble.b2 .ings.n1{--nc:1}.bubble.b2 .ings.n2{--nc:2}
+.bubble.b2 .ings.n1 img{width:84px!important;height:76px!important}
+.bubble.b2 .ings.n1{grid-template-columns:84px!important}
+.bubble.b2 .ings.n4{grid-template-columns:repeat(4,56px)!important}
+.bubble.b2 .ings.n4 img{width:56px!important;height:60px!important}
+.bubble.b2 .ings.n5,.bubble.b2 .ings.n6{grid-template-columns:repeat(3,72px)!important}
+.bubble.b2 .ings.n5 img,.bubble.b2 .ings.n6 img{width:72px!important;height:50px!important}
+.bubble.b2 .ings img.have{opacity:.22;filter:grayscale(.8)}
+#beachsign{z-index:4}
+/* the map picture is painted once on #mapWorld (it scrolls as one layer); no second 'local' background on the scroller */
+#mapScroll{background:#6fd6ef!important}
+
+.pat i{width:100%!important;will-change:transform}
+/* hint glow: a ring that fades in and out (composited opacity, no repaint every frame) */
+.ing.hint{animation:none!important;box-shadow:0 0 0 4px var(--sun)}
+.ing.hint::after{content:"";position:absolute;inset:-7px;border-radius:21px;border:4px solid rgba(255,197,49,.75);pointer-events:none;animation:glowR 1s ease-in-out infinite;will-change:opacity}
+@keyframes glowR{0%,100%{opacity:0}50%{opacity:1}}
+#game.mystery .ing.hint::after{content:none}
+/* walking customers move on their own layer (no repaint of the picture and its glow every step) */
+.slot .cust{will-change:transform}
+.adbox.adwait{padding:26px 50px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.adspin{width:54px;height:54px;border-radius:50%;border:7px solid rgba(255,255,255,.25);border-top-color:#8ee65a;animation:adSpin .8s linear infinite}
+@keyframes adSpin{to{transform:rotate(360deg)}}
 </style>
 
   <div id="loader">
@@ -1790,7 +1825,7 @@ const num=el=>+String(el.textContent).replace(/[^0-9.-]/g,'')||0;
   const walk=r=>{if(r.nodeType===3)return fix(r);const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode())fix(n)};
   new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')fix(m.target);else m.addedNodes.forEach(walk)}}).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
   document.addEventListener('DOMContentLoaded',()=>walk(document.body))})();
-var CURL={};const A=n=>{return CURL[n]||('a/'+n+'.webp')};
+var CURL={};const A=n=>{return CURL[n]||('a/'+n+'.webp')};const BT=b=>A('bt_'+String(b.bg).slice(3)); // small map/souvenir card picture (tools/mkthumbs.py)
 
 /* ================= LANGUAGES ================= */
 const STR={"en":{"expert":"Super Hard","explore":"LET'S EXPLORE!","nextstop":"Your next stop:","unlocked":"New beach unlocked!","tap":"Tap to start","tag":"Blend your way around the world's beaches!","journey":"BEACH TOUR","quick":"CHALLENGE","tour":"World Beach Tour","swipe":"Swipe to explore the world","souv":"My Souvenirs","best":"BEST","blend":"BLEND!","rotate":"Turn your phone sideways to play","anyway":"Play like this","settings":"Settings","ret":"RETURN","home":"HOME","music":"Music","waves":"Waves","sound":"Sound","noads":"No ads","language":"Language","adsoon":"An ad-free version is coming soon!","hi":"Hi, {n}!","choose":"Choose your player and name","yourname":"Your name","letsplay":"LET'S PLAY!","go":"LET'S GO!","menu":"Today's menu. Tap a customer to see what goes in their shake!","map":"MAP","start":"START","easy":"Easy","normal":"Medium","hard":"Hard","qp":"Quick Play","r1":"No clock! Make as many shakes as you can.","r2":"Lose a heart when a customer leaves angry.","r3":"Serve fast in a row to win extra coins.","r4":"Every few shakes the game gets faster.","bestOn":"Best on {d}:","bestN":"Best: {n}","level":"Level {n}","lvlup":"Level {n}!","bonus":"+{n} bonus coins","heart1":"+1 heart!","newshake":"New shake: {s}","letsshake":"LET'S<br>SHAKE!","lostheart":"Oh no! You lost a heart","custleft":"Oh no! A customer left unhappy","waitturn":"Wait your turn! Serve customer 1 first","pressblend":"Press BLEND, then tap me!","makefirst":"Make my shake first!","combo":"Combo ×{n}!","record":"NEW RECORD!","p1":"Super fast!","p2":"Yummy!","p3":"Perfect!","p4":"Great job!","notmine":"That's not my order!","servefirst":"Serve the shake first!","blending":"Blending...","full":"The blender is full!","tapc1":"Now tap customer 1!","oops":"Oops! That mix isn't on the menu","tapwho":"Tap the customer who ordered it!","paused":"Paused","newhigh":"New high score","gameover":"Game over","again":"AGAIN","complete":"Level complete!","almost":"Almost there!","newsouv":"New souvenir!","from":"from {p}","next":"NEXT","coins":"{n} coins","served":"{n} served","firststar":"Earn {n} coins to get your first star.","reached":"reached level {n}","finish":"Finish {b}","soon":"Coming soon","r_splash":"Strawberry Splash","r_bhoney":"Banana Honey","r_sunrise":"Mango Sunrise","r_kiwi":"Kiwi Cooler","r_melon":"Watermelon Wave","r_berry":"Berry Blast","r_grand":"Grand Rainbow","r_samba":"Pineapple Samba","r_copa":"Copacabana Sunset","r_lagoon":"Lagoon Kiwi","r_cliff":"Purple Cliff","r_bali":"Bali Breeze","r_bondi":"Bondi Berry Surf","r_aloha":"Aloha Pineapple","r_golden":"Golden Gate Gold","r_surfer":"Venice Surfer","r_fiesta":"Cancun Fiesta","r_miami":"Miami Melon","r_penguin":"Penguin Party","r_desert":"Desert Gold","r_maldive":"Maldives Lagoon","r_santo":"Santorini Sunset","r_aegean":"Aegean Blue","r_amalfi":"Amalfi Orange Fizz","r_gelato":"Venice Gelato","r_doge":"Grand Canal Rainbow","r_choc":"Choco Banana Freeze","r_coco":"Coconut Cloud","r_oceanb":"Ocean Blue","r_mintb":"Mint Breeze","r_tropic":"Tropical Sunrise","r_swirl":"Berry Swirl","r_caramel":"Caramel Dream","r_peach":"Peach Paradise","pickbeach":"Choose your beach","beachlocked":"Finish it in Journey to unlock (or buy it soon!)","done":"DONE","r_milktea":"Classic Boba Milk Tea","r_tigerboba":"Brown Sugar Tiger","r_matchal":"Matcha Latte","r_matchaboba":"Matcha Boba","r_coffeefr":"Coffee Frappe","r_mocha":"Mocha Cream","r_passionpop":"Passion Pop Tea","r_papayapop":"Papaya Pop","r_jellytea":"Rainbow Jelly Tea","r_cocomint":"Coconut Mint Cooler","r_cherrycrush":"Cherry Crush","r_honeyboba":"Honeydew Boba","r_mintchoc":"Mint Choc Chill","r_blackforest":"Black Forest Shake","r_tropicpop":"Tropical Boba Party","r_acai":"Rio Açaí Power","r_thaitea":"Thai Iced Tea","r_granita":"Sicilian Orange Granita","sigtitle":"New Signature Shake!","sigsub":"You finished {b}!<br>Its special shake is now in your game.","recipes":"Collection","souvtab":"Souvenirs","siglocked":"Finish {b}","great":"GREAT!","r_ggchoc":"Golden Gate Chocolate","r_greenglow":"Venice Green Glow","r_cubancafe":"Miami Cuban Coffee","r_greekyog":"Greek Honey Yogurt","r_tiramisu":"Venetian Tiramisu","r_limonada":"Coconut Limonada"}};
@@ -2378,7 +2413,7 @@ function openPrizes(from){prizeFrom=from;$('#prizes').hidden=false;
   $('#prizeCount').textContent=prizeTotal()+'/'+Object.keys(PRIZES).length*3;
   // each beach is a little postcard: its photo on top, the 3 souvenirs below, a postmark once all 3 are collected
   $('#prizeGrid').innerHTML=badgeRow()+BEACHES.filter(b=>PRIZES[b.id]).map((b,k)=>{const got=[0,1,2].filter(i=>UNLOCK_ALL||save.prizes[b.id+'-'+i]).length,ctry=String(b.where||'').split(',').pop().trim();
-    return `<div data-b="${b.id}" class="pc ${got===3?'full':''} ${got?'':'empty'}" style="--r:${[-1.4,.9,-.6,1.2][k%4]}deg"><div class="pch" style="background-image:url(${A(b.bg)})"><b>${b.name}</b><small>${ctry}</small></div><i class="pcf"></i><span class="pcn">${got}/3</span><div class="row">${PRIZES[b.id].map((n,i)=>{const own=UNLOCK_ALL||save.prizes[b.id+'-'+i];
+    return `<div data-b="${b.id}" class="pc ${got===3?'full':''} ${got?'':'empty'}" style="--r:${[-1.4,.9,-.6,1.2][k%4]}deg"><div class="pch" style="background-image:url(${BT(b)})"><b>${b.name}</b><small>${ctry}</small></div><i class="pcf"></i><span class="pcn">${got}/3</span><div class="row">${PRIZES[b.id].map((n,i)=>{const own=UNLOCK_ALL||save.prizes[b.id+'-'+i];
     return `<div class="it ${own?'':'no'}" title="${own?n:'Win level '+(i+1)+' at '+b.name}"><img src="${A('p_'+b.id+'_'+i)}" alt="${own?n:'Locked souvenir'}"></div>`}).join('')}</div>${got===3?`<i class="pmark" style="color:${k%2?'#d8261a':'#2f4fc4'}"><small>★ ${ctry.toUpperCase()} ★</small><b>COLLECTED</b><small>${b.name.toUpperCase()}</small></i>`:''}</div>`}).join('')}
 $('#wallet').onclick=()=>{audio();sfx.pop();openShop()};
 $('#prizeBtn1').onclick=()=>{audio();sfx.pop();openPrizes('title')};
@@ -2472,7 +2507,7 @@ function openMap(fresh){
   $('#beaches').innerHTML=BEACHES.map((b,bi)=>{
     const reach=reachable(bi),open=reach&&hasArt(bi),p=cardPos(bi);
     return `<div class="bc ${open?'':'locked'} ${bi===cur&&open?'current':''}" style="left:${p.x}px;top:${p.y}px">
-      <div class="frame"><span class="num">${bi+1}</span>${b.bg?`<img class="pic" src="${A(b.bg)}" alt="" loading="lazy">`:`<div class="soon"><span>${T('soon')}</span></div>`}
+      <div class="frame"><span class="num">${bi+1}</span>${b.bg?`<img class="pic" src="${BT(b)}" alt="" loading="lazy" decoding="async">`:`<div class="soon"><span>${T('soon')}</span></div>`}
       ${b.bg&&!reach?`<img class="lockic" src="${A('u_lock')}" alt=""><div class="stbadge ${starTotal()>=starNeed(bi)?'ok':''}"><img src="${A('u_star')}" alt=""><b>${starNeed(bi)}</b>${starTotal()>=starNeed(bi)?'<i>✓</i>':''}</div>${prevDone(bi)?`<div class="need stneed"><img src="${A('u_star')}" alt="">${starTotal()}/${starNeed(bi)} stars</div>`:`<div class="need">${T('finish',{b:BEACHES[bi-1].name})}</div>`}`:''}
       ${bi===cur&&open?`<button class="btn small playpill" data-b="${bi}">PLAY</button>`:''}${(()=>{if(!b.bg)return '';const rs=[SIG[b.id],regNewAt(bi)].filter(Boolean);if(!rs.length)return '';const miss=rs.find(r=>!colHas(r));
   return miss?`<div class="cupteaser"><img src="${A('cup_'+R[miss].cup)}" alt=""><span>?</span></div>`:`<div class="cupteaser got" title="${RN(rs[0])}"><img src="${A('cup_'+R[rs[0]].cup)}" alt=""></div>`})()}</div>
@@ -2797,9 +2832,10 @@ function loop(now){
     const front=G.q.find(c=>!c.leaving);
     G.q.forEach(c=>{if(c.leaving||!c.arrived)return;
       if(!(G.frozen>0)&&!(c.special==='monkey'&&c!==front))c.p-=dt/(G.L.pat*PACE*(c.patF||1))*(c===front?1:.5)*(G.patMul||1); // people further back in line wait more patiently
-      const bar=c.el.querySelector('.pat i');
-      bar.style.width=Math.max(0,c.p*100)+'%';bar.style.background=c.p>.5?'var(--leaf)':c.p>.25?'var(--sun)':'var(--coral)';
-      const face=c.p<.4?'wait':'happy';if(face!==c.face){c.face=face;c.el.querySelector('.cust').src=A('c_'+c.who+'_'+face)}
+      const bar=c.bar||(c.bar=c.el.querySelector('.pat i')); // moved, not resized: no page re-layout every frame
+      const pp=Math.max(0,c.p),pk=Math.round(pp*400);if(pk!==c.pk){c.pk=pk;bar.style.transform=`translate3d(${((pp-1)*100).toFixed(2)}%,0,0)`}
+      const bc=pp>.5?'var(--leaf)':pp>.25?'var(--sun)':'var(--coral)';if(bc!==c.bc){c.bc=bc;bar.style.background=bc}
+      const face=c.p<.4?'wait':'happy';if(face!==c.face){c.face=face;(c.cu||(c.cu=c.el.querySelector('.cust'))).src=A('c_'+c.who+'_'+face)}
       if(c.p<=0)angry(c)});
     if(G.t<=0){G.t=0;end()}
     updHud();
@@ -2813,12 +2849,12 @@ function moveTo(c,x,done){ // walk a customer to x at one steady speed, with a l
   if(Math.abs(x-c.px)<1){WALKERS.delete(c);c.el.classList.remove('walkjs');const cu=c.el.querySelector('.cust');if(cu)cu.style.translate='';c.el.style.transform=`translate3d(${c.px}px,0,0)`;c.mdone=null;done&&done();return}
   c.el.classList.add('walkjs');WALKERS.add(c);if(!walkRaf){walkT=0;walkRaf=requestAnimationFrame(walkTick)}}
 const WALKERS=new Set(),WALK_V=1150,HOP=190;let walkRaf=0,walkT=0;
-function walkTick(t){const dt=walkT?Math.min(.05,(t-walkT)/1000):1/60;walkT=t;
+function walkTick(t){const dt=walkT?Math.min(.07,(t-walkT)/1000):1/60;walkT=t;
   WALKERS.forEach(c=>{if(!c.el.isConnected){WALKERS.delete(c);return}
     if(G&&G.paused&&!c.leaving)return;
-    const d=c.tx-c.px,v=Math.min(WALK_V,160+Math.abs(d)*7),st=Math.sign(d)*Math.min(Math.abs(d),v*dt);c.px+=st;c.trav=(c.trav||0)+Math.abs(st);
+    const d=c.tx-c.px;c.wv=Math.min((c.wv||220)+5200*dt,WALK_V,160+Math.abs(d)*6.5);const v=c.wv,st=Math.sign(d)*Math.min(Math.abs(d),v*dt); /* speeds up smoothly, glides to a stop */c.px+=st;c.trav=(c.trav||0)+Math.abs(st);
     c.el.style.transform=`translate3d(${c.px.toFixed(1)}px,0,0)`;const cu=c.cu||(c.cu=c.el.querySelector('.cust'));
-    if(Math.abs(c.tx-c.px)<.6){c.px=c.tx;c.el.style.transform=`translate3d(${c.px}px,0,0)`;WALKERS.delete(c);c.trav=0;if(cu)cu.style.translate='';c.el.classList.remove('walkjs');const f=c.mdone;c.mdone=null;f&&f()}
+    if(Math.abs(c.tx-c.px)<.6){c.px=c.tx;c.wv=0;c.el.style.transform=`translate3d(${c.px}px,0,0)`;WALKERS.delete(c);c.trav=0;if(cu)cu.style.translate='';c.el.classList.remove('walkjs');const f=c.mdone;c.mdone=null;f&&f()}
     else if(cu)cu.style.translate=`0 ${(-11*Math.abs(Math.sin(Math.PI*c.trav/HOP))).toFixed(1)}px`});
   walkRaf=WALKERS.size?requestAnimationFrame(walkTick):0}
 function layout(){ // line order = arrival order; customer 1 stands closest to the blender
@@ -2839,7 +2875,7 @@ function spawnWho(who,ani){
   const spc=ani?ani.pow:null;if(!spc){G.recent.push(who);if(G.recent.length>8)G.recent.shift()}
   const r=spc==='hiker'?G.L.menu.slice().sort((a,b)=>R[b].ing.length-R[a].ing.length)[0]:G.L.menu[Math.floor(Math.random()*G.L.menu.length)];
   const el=document.createElement('div');
-  el.innerHTML=`<div class="bubble b2">${ani?`<span class="sptag" style="background:${ani.col}">${ani.tag}</span>`:''}<div class="bh"><span class="qn"></span><b class="nm ${RN(r).length>15?'long':''}">${RN(r)}</b></div><div class="bb"><img class="cup" src="${A('cup_'+R[r].cup)}" alt=""><div class="ings n${R[r].ing.length}">${ingIcons(r)}</div></div><div class="pat"><i></i></div></div>
+  el.innerHTML=`<div class="bubble b2">${ani?`<span class="sptag" style="background:${ani.col}">${ani.tag}</span>`:''}<div class="bh"><span class="qn"></span><b class="nm ${RN(r).length>15?'long':''}">${RN(r)}</b><img class="cup" src="${A('cup_'+R[r].cup)}" alt=""></div><div class="bb"><div class="ings n${R[r].ing.length}">${ingIcons(r)}</div></div><div class="pat"><i></i></div></div>
     <img class="cust" src="${A('c_'+who+'_happy')}" alt="Customer">`;
   el.className='slot enter'+(who.startsWith('f_')?' fruit':'');el.style.left='-260px';el.style.transform='translate3d(-260px,0,0)';$('#slots').appendChild(el);
   const goldEv=G.quick&&G.ev&&QEV[G.ev].gold;
@@ -3003,7 +3039,7 @@ function end(){
   const aniNew=null;
   const rBefore=BEACHES.map((_,i)=>reachable(i));
   if(s>best)save.stars[key]=s;
-  const unlock=BEACHES.findIndex((_,i)=>!rBefore[i]&&reachable(i)&&hasArt(i));G.earned=earned();save.bank+=G.earned;if(s>0)dailyAdd('stars',s);const nb=newBadges();
+  const unlock=BEACHES.findIndex((_,i)=>!rBefore[i]&&reachable(i)&&hasArt(i));G.earned=earned();save.bank+=G.earned;let dbl=false;if(s>0){save.passN=(save.passN|0)+1;dbl=save.passN%2===0&&G.earned>0}if(s>0)dailyAdd('stars',s);const nb=newBadges();
   save.prizes=save.prizes||{};const won=s>0&&!!PRIZES[G.B.id]&&!save.prizes[key];if(won)save.prizes[key]=1;persist();prizeBadges();
   let next=null;
   if(s>0){if(G.li<2)next=[G.bi,G.li+1];else if(G.bi<BEACHES.length-1&&levelOpen(G.bi+1,0))next=[G.bi+1,0]}
@@ -3015,6 +3051,7 @@ function end(){
       <div class="stats endrow"><div id="stC"><img src="${A('u_coin')}" alt=""><b id="stCn">${save.bank-G.earned}</b></div><div id="stK"><img src="${A('cupcoin')}" alt=""><b id="stKn">${(save.cups|0)-G.served}</b></div></div>
       <div class="endmid">${won?`<div class="souv"><div class="souvrib">NEW SOUVENIR!</div><div class="souvimg"><i class="crays"></i><img src="${A('p_'+G.B.id+'_'+G.li)}" alt=""></div><b>${PRIZES[G.B.id][G.li]}</b><small>${T('from',{p:G.B.where})}</small></div>`:''}
       
+      ${dbl?`<div class="dblc" id="dblc"><img src="${A('u_coin')}" alt=""><b>x2 COINS!<br><small>Double this level</small></b>${watchBtn('w2','+'+G.earned)}</div>`:''}
       ${s===0?`<p class="sub" style="margin-top:12px">${T('firststar',{n:G.L.goals[0]})}</p>`:''}
       ${s>0&&G.li===2&&G.bi<BEACHES.length-1&&!reachable(G.bi+1)&&prevDone(G.bi+1)?`<div class="stargate"><img src="${A('u_star')}" alt=""><span><b>${starTotal()}/${starNeed(G.bi+1)} stars</b><br>Get ${starNeed(G.bi+1)-starTotal()} more stars to open ${BEACHES[G.bi+1].name}!</span></div>`:''}
       ${s===0&&!G.rescued?`<div class="rescue r2" id="rsc"><svg class="rring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/></svg><b>So close!<br><small>Watch a video for 15 more seconds</small></b>${watchBtn('rsV','+15 SEC')}</div>`:''}
@@ -3034,7 +3071,7 @@ function end(){
       el.classList.add('open');el.querySelector('img').src=A(kind==='gold'?'gchest_open':'chest_open');el.querySelector('span').innerHTML=`<img src="${A(pz.ic)}" alt="" class="pzi">${pz.txt}`;el.disabled=true;sfx2.perfect();setTimeout(()=>gotIt({img:pz.img,name:pz.name,sub:pz.sub,prize:pz.prize},fly),350)};
     if($('#ch1'))$('#ch1').onclick=()=>{const c=$('#ch1');c.disabled=true;showRewarded(()=>openCh(c,'wood'))};
     if($('#ch2'))$('#ch2').onclick=()=>{const c=$('#ch2');c.disabled=true;showRewarded(()=>openCh(c,'gold'))};
-    showInterstitial();if($('#w2'))$('#w2').onclick=()=>{const b=$('#w2');b.disabled=true;showRewarded(()=>{save.bank+=G.earned;persist();b.innerHTML='✓ +'+G.earned;sfx.coin();toast('+'+G.earned+' coins!')})};
+    showInterstitial();if($('#w2'))$('#w2').onclick=()=>{const b=$('#w2');b.disabled=true;showRewarded(()=>{save.bank+=G.earned;persist();b.innerHTML='✓ +'+G.earned;b.classList.remove('watch');b.disabled=true;sfx.coin();toast('+'+G.earned+' coins!');flyTo(b,$('#stC'),'u_coin',8,()=>{const e=$('#stCn');countUp(e,num(e),save.bank)})})};
     $('#rr').onclick=()=>{sfx.pop();closeOv();const b=G.bi,l=G.li;headStart(()=>whenReady(BEACHES[b].bg,()=>start(b,l)))};
     if(next)$('#rn').onclick=()=>{sfx.pop();closeOv();G.q.slice().forEach(c=>c.el.remove());const go=()=>{try{$('#gbg').src=A(BEACHES[next[0]].bg)}catch(e){}intro(next[0],next[1])};const go2=()=>unlock>=0?showUnlock(unlock,go):go();const g3=()=>nb.length?showBadges(nb.slice(),go2):go2();sigNew?showSig(sigNew,G.B,g3):g3()};
   },900);
@@ -3449,20 +3486,38 @@ try{if('serviceWorker' in navigator&&location.protocol==='https:'&&!NATIVE&&!/cl
 const ADMOB=NATIVE?((window.Capacitor.Plugins&&window.Capacitor.Plugins.AdMob)||(window.Capacitor.registerPlugin&&window.Capacitor.registerPlugin('AdMob'))||null):null;
 const ADS_LIVE=!!ADMOB; // full-screen ads between levels only in the app
 const IAP_LIVE=!NATIVE; // paid items stay hidden in the app until Google Play Billing is connected
-let adReady=false;
-if(ADMOB){ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'}).then(()=>{adReady=true}).catch(()=>{})}
+let adReady=false,adLoaded=false,adLoading=null,adIniting=null,adErr='';
+// one video is loaded ahead of time, so a tap on a video button can show it right away
+const adCode=e=>{try{const c=e&&(e.code!=null?e.code:(e.data&&e.data.code));return c!=null?String(c):''}catch(x){return ''}};
+function adInit(){if(!ADMOB)return Promise.resolve(false);if(adReady)return Promise.resolve(true);if(adIniting)return adIniting;
+  adIniting=ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'})
+    .then(()=>{adReady=true;adIniting=null;setTimeout(adPreload,800);return true}).catch(e=>{adIniting=null;adErr='i'+adCode(e);return false});return adIniting}
+function adPreload(){if(!ADMOB||!adReady)return Promise.resolve(false);if(adLoaded)return Promise.resolve(true);if(adLoading)return adLoading;
+  adLoading=ADMOB.prepareRewardVideoAd({adId:ADCFG.rewarded,isTesting:ADCFG.testing,npa:true})
+    .then(()=>{adLoaded=true;adErr='';adLoading=null;return true}).catch(e=>{adLoaded=false;adErr=adCode(e);adLoading=null;return false});return adLoading}
+if(ADMOB)adInit();
 function adPause(on){if(on){window.__adMuted=true;try{ac&&ac.suspend()}catch(e){}}else{window.__adMuted=false;try{ac&&ac.resume()}catch(e){}}}
 // if a video can't load, the button that asked for it becomes tappable again (so the player can try later)
 let adBtn=null;document.addEventListener('pointerdown',e=>{const b=e.target&&e.target.closest&&e.target.closest('button');if(b)adBtn=b},true);
 const adRetry=()=>{const b=adBtn;if(b&&b.disabled&&document.contains(b))b.disabled=false};
+function adWait(on){const o=$('#adlayer');if(!o)return;if(on){o.hidden=false;o.innerHTML=`<div class="adbox adwait"><div class="adspin"></div><div class="adt">Loading video…</div></div>`}else{o.hidden=true;o.innerHTML=''}}
+let adBusy=false;
 function showRewarded(done){ // "watch a video to get a reward"
   if(save.noAds){done&&done();return}
-  if(ADMOB&&adReady){let got=false;const hs=[];const off=()=>hs.forEach(h=>h.then?h.then(x=>x.remove()):h.remove&&h.remove());adPause(true);
-    hs.push(ADMOB.addListener('onRewardedVideoAdReward',()=>{got=true}));
-    hs.push(ADMOB.addListener('onRewardedVideoAdDismissed',()=>{off();adPause(false);if(got){sfx.coin();done&&done()}else{adRetry();toast('Watch the whole video to get the prize!')}}));
-    hs.push(ADMOB.addListener('onRewardedVideoAdFailedToLoad',()=>{off();adPause(false);adRetry();toast('No video right now. Try again soon!')}));
-    ADMOB.prepareRewardVideoAd({adId:ADCFG.rewarded,isTesting:ADCFG.testing,npa:true}).then(()=>ADMOB.showRewardVideoAd()).catch(()=>{off();adPause(false);adRetry();toast('No video right now. Try again soon!')});return}
-  if(NATIVE){adRetry();toast(ADMOB?'Getting a video ready… try again in a moment!':'No video right now. Try again soon!');if(ADMOB&&!adReady){try{ADMOB.initialize({initializeForTesting:ADCFG.testing,tagForChildDirectedTreatment:true,tagForUnderAgeOfConsent:true,maxAdContentRating:'General'}).then(()=>{adReady=true}).catch(()=>{})}catch(e){}}return} // in the app: never a fake video
+  if(ADMOB){if(adBusy)return;adBusy=true;let over=false,got=false;const hs=[];
+    const off=()=>{hs.forEach(h=>{try{h&&h.then?h.then(x=>x&&x.remove&&x.remove()):h&&h.remove&&h.remove()}catch(e){}});hs.length=0};
+    const finish=()=>{over=true;adBusy=false;clearTimeout(tm);adWait(false);off();adPause(false);adLoaded=false;setTimeout(adPreload,1500)};
+    const fail=()=>{if(over)return;if(!adLoaded)adLoading=null;finish();adRetry();toast('No video right now. Try again soon!'+(adErr?' ('+adErr+')':''))};
+    const tm=setTimeout(fail,15000); // never leave the player stuck on "loading"
+    adWait(true);
+    adInit().then(ok=>ok?adPreload():false).then(ok=>{if(over)return;if(!ok){fail();return}
+      clearTimeout(tm);adWait(false);adPause(true);
+      hs.push(ADMOB.addListener('onRewardedVideoAdReward',()=>{got=true}));
+      hs.push(ADMOB.addListener('onRewardedVideoAdFailedToShow',e=>{adErr='s'+adCode(e);fail()}));
+      hs.push(ADMOB.addListener('onRewardedVideoAdDismissed',()=>{if(over)return;finish();if(got){sfx.coin();done&&done()}else{adRetry();toast('Watch the whole video to get the prize!')}}));
+      adLoaded=false;ADMOB.showRewardVideoAd().then(r=>{if(r&&r.amount!=null)got=true}).catch(e=>{adErr='s'+adCode(e);fail()})});
+    return}
+  if(NATIVE){adRetry();toast('No video right now. Try again soon!');return} // in the app: never a fake video
   const o=$('#adlayer');let n=3;o.hidden=false;o.innerHTML=`<div class="adbox"><div class="adt">Video ad</div><div class="adn" id="adn">${n}</div><small>In the app a short video plays here</small></div>`;
   const t=setInterval(()=>{n--;const e=$('#adn');if(e)e.textContent=n;if(n<=0){clearInterval(t);o.hidden=true;o.innerHTML='';sfx.coin();done&&done()}},1000)}
 // before a new game: a few seconds to take a free power-up for a video, then the offer goes away by itself
