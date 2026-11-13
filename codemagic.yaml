@@ -43,7 +43,7 @@ workflows:
           NEXT=$(python3 -c "import sys;print(max(int(x or 0) for x in sys.argv[1:])+1)" "${AS:-0}" "${TF:-0}" "$(( ${BUILD_NUMBER:-0} ))")
           echo "Build number: $NEXT (App Store $AS, TestFlight $TF)"
           agvtool new-version -all $NEXT
-          agvtool new-marketing-version 1.0
+          agvtool new-marketing-version 1.1
       - name: Build the app (.ipa)
         script: |
           cd app-project/ios/App

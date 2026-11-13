@@ -16,5 +16,5 @@ if(!g.includes('signingConfigs {')){
 }
 g=g.replace(/(buildTypes\s*\{\s*release\s*\{)/,'$1\n            signingConfig signingConfigs.release');
 const vc=parseInt(process.env.BUILD_NUMBER||process.env.PROJECT_BUILD_NUMBER||'1',10)+100;
-g=g.replace(/versionCode\s+\d+/,'versionCode '+vc).replace(/versionName\s+"[^"]*"/,'versionName "1.0"');
+g=g.replace(/versionCode\s+\d+/,'versionCode '+vc).replace(/versionName\s+"[^"]*"/,'versionName "1.1"');
 fs.writeFileSync(p,g);console.log('build.gradle signing patched, versionCode',vc);
