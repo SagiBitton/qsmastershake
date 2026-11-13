@@ -1710,6 +1710,12 @@ button:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
 .adbox.adwait{padding:26px 50px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .adspin{width:54px;height:54px;border-radius:50%;border:7px solid rgba(255,255,255,.25);border-top-color:#8ee65a;animation:adSpin .8s linear infinite}
 @keyframes adSpin{to{transform:rotate(360deg)}}
+/* round 18: beach sign as wide as the clock above it */
+#beachsign{left:1086px!important;width:208px!important}
+#beachsign b{font-size:21px}#beachsign b.long{font-size:17px}#beachsign small{font-size:12.5px;margin-top:3px}
+/* round 18: bigger blender pictures in the shop */
+#overlay .shopcard:not(.bmode):not(.storecard) .sitem.blitem>img{height:118px!important;max-width:100%;margin:-17px 0 -5px;position:relative;z-index:0}
+#overlay .shopcard .sitem.blitem>b{position:relative;z-index:1}
 </style>
 
   <div id="loader">
@@ -3389,13 +3395,13 @@ function openShop(tab,keep){if(tab)shopTab=tab;if(!tab&&shopTab==='boosts'&&!win
   const items=shopTab==='boosts'?Object.entries(BOOSTS).map(([id,b])=>`<div class="sitem bitem"><span class="bimg"><img src="${A(b.ic)}" alt=""><b class="bcnt ${(save.boosts[id]|0)?'':'zero'}">${save.boosts[id]|0}</b></span><b>${b.name}</b><small>${two(b.desc)}</small>
       <button class="buy ${save.bank<b.price?'no':''}" data-k="b:${id}">${coinIc()}${b.price}</button></div>`)
     :shopTab==='cups'?mixCups([CUPSHOP.map(c=>`<div class="sitem cupi"><img src="${A(c.ic)}" alt=""><b>${c.name}</b><small>${two(c.desc)}</small><button class="buy cupb ${(save.cups|0)<c.cups?'no':''}" data-k="c:${c.id}">${cupIc()}${c.cups}</button></div>`),
-      BL_ORDER.filter(i=>BLENDERS[i].cups).sort((a,b)=>BLENDERS[a].cups-BLENDERS[b].cups).map(i=>{const b=BLENDERS[i],own=save.owned['bl'+i],use=save.blender===i;return `<div class="sitem cupi"><span class="excl">ONLY FOR CUPS</span><img src="${A(b.img+'_full')}" alt=""><b>${b.name}</b><small>${two(b.desc)}</small>
+      BL_ORDER.filter(i=>BLENDERS[i].cups).sort((a,b)=>BLENDERS[a].cups-BLENDERS[b].cups).map(i=>{const b=BLENDERS[i],own=save.owned['bl'+i],use=save.blender===i;return `<div class="sitem cupi blitem"><span class="excl">ONLY FOR CUPS</span><img src="${A(b.img+'_full')}" alt=""><b>${b.name}</b><small>${two(b.desc)}</small>
         ${use?'<span class="buy got">In use ✓</span>':own?`<button class="buy use" data-k="u:${i}">Use</button>`:`<button class="buy cupb ${(save.cups|0)<b.cups?'no':''}" data-k="cb:${i}">${cupIc()}${b.cups}</button>`}</div>`}),
       DECOR.filter(d=>CUPDEC[d.id]).map(d=>`<div class="sitem cupi"><span class="excl">ONLY FOR CUPS</span><img src="${A(d.id)}" alt=""><b>${d.name}</b><small>${two('Decorates your stand')}</small>
         ${save.owned[d.id]?'<span class="buy got">Owned ✓ (see Stand)</span>':`<button class="buy cupb ${(save.cups|0)<CUPDEC[d.id]?'no':''}" data-k="cd:${d.id}">${cupIc()}${CUPDEC[d.id]}</button>`}</div>`),
       STANDS.filter(st=>st.cups).map(standItem)])
     :shopTab==='blenders'?BL_ORDER.filter(i=>!BLENDERS[i].cups||save.owned['bl'+i]).map(i=>{const b=BLENDERS[i];const own=i===0||save.owned['bl'+i],use=save.blender===i;
-      return `<div class="sitem"><img src="${A(b.img+'_full')}" alt=""><b>${b.name}</b><small>${two(b.desc)}</small>
+      return `<div class="sitem blitem"><img src="${A(b.img+'_full')}" alt=""><b>${b.name}</b><small>${two(b.desc)}</small>
       ${use?'<span class="buy got">In use ✓</span>':own?`<button class="buy use" data-k="u:${i}">Use</button>`:`<button class="buy ${save.bank<b.price?'no':''}" data-k="l:${i}">${coinIc()}${b.price}</button>`}</div>`})
     :shopTab==='outfits'?OUTFITS.map(o=>{const own=save.owned[o.id],on=save.outfit===o.id;return `<div class="sitem"><img src="${A(o.img)}" alt=""><b>${o.name}</b><small>${two(o.desc)}</small>
       ${on?`<button class="buy got" data-k="o:none">Wearing ✓</button>`:own?`<button class="buy use" data-k="o:${o.id}">Wear</button>`:`<button class="buy ${save.bank<o.price?'no':''}" data-k="f:${o.id}">${coinIc()}${o.price}</button>`}</div>`})
